@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skat Memory Spiel</title>
+<link rel="stylesheet" href="MemoryStyle.css">
+
+</head>
+	<button class="restart-button" id="restart-button" onclick="restartGame()">Spiel starten</button>
+	<button class="show-all-button" id="absenden">Absenden und zurück</button>
+	
+	<header> Skat Memory Spiel </header>
+	<div class="moves-counter">
+    <h2>Züge: <span id="move-count">0</span></h2>
+	<div class="timer-container">
+    <h2>Zeit: <span id="timer">0s</span></h2>
+</div>
+</div>
+
+	<main>
+	 
+   <div class = "main-container">
+       <div id = "card-board">	
+  </div>
+           <!--  -->
+       </div>
+	 <div class="popup-container" id="popupContainer">
+        <div class="popup-content">
+            <span class="close-button" onclick="closePopup()">X</span>
+            <h1>Glückwunsch!</h1>
+            <p>Du hast X Züge gebraucht.</p>
+        </div>
+    </div>
+
+	</main>
+   <script src = "MemoryScript.js"></script>
+</body>
+</html>

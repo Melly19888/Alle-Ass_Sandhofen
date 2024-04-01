@@ -1,0 +1,250 @@
+/*Dieser Abschnitt setzt den Padding und Margin auf 0
+für alle Elemente und verwendet die border-box-Box-Modell-Eigenschaft.*/
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.timer-container {
+    text-align: center;
+    margin-top: 10px;
+}
+/* Hier wird der linke Seitenabstand des Body-Elements auf 3em gesetzt, 
+die maximale Breite auf 1200px und die Hintergrundfarbe auf #98f5ff.*/
+
+body{
+	margin-left: 5em;
+	 max-width: 1200px;
+    background-color: #98f5ff;
+}
+
+/*Alle Bilder werden auf 100% der Breite des übergeordneten Elements gesetzt und als Blockelemente dargestellt.*/
+
+img{
+    width: 100%;
+    display: block;
+}
+/* Dieser Abschnitt definiert das Styling für den Hauptcontainer des Spiels, 
+einschließlich der maximalen Breite, zentrierten Ausrichtung und Mindesthöhe.*/
+
+.main-container{
+	
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 792px;
+}
+
+/* Hier wird das Rasterlayout für das Spiel definiert,
+ mit einer Spaltenanzahl von 10 und einem Abstand von 10px zwischen den Zellen.*/
+ 
+.grid{
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 10px;
+}
+
+/* Definiert das Styling für die Spielkarten, einschließlich abgerundeter Ecken, Schatten, 
+Cursor-Eigenschaft und Hintergrundfarbe.*/
+
+.card{
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 1);
+    cursor: pointer;
+    position: relative;
+    background-color: #00008b;
+	background-image: url( 'IMG/Handschellen.jpg');
+}
+
+/* Ändert die Hintergrundfarbe der Karte beim Überfahren mit der Maus.*/
+
+.card:hover {
+  background-color: #070124;
+}
+/*  Definiert das Styling für die Bilder innerhalb der Karten, einschließlich des Abstands und der Anfangsopazität.*/
+
+.card img{
+    padding: 1rem;
+    opacity: 0;
+}
+
+/* .selected{ ... } und .matched{ ... }: Definieren das Styling für ausgewählte bzw. übereinstimmende Karten im Spiel. */
+
+.selected{
+    outline: 3px solid 	#8a2be2;
+    outline-offset: -3px;
+    border-radius: 8px;
+}
+.selected img{
+    opacity: 1;
+}
+.matched{
+    outline: 3px solid #ff3f34;
+}
+
+/*.restart-button { ... } und .show-all-button { ... }: Definieren das Styling für die Neustart- und
+ "Alle Karten zeigen" -Schaltflächen im Spiel, einschließlich Hintergrundfarbe, Textfarbe, Polsterung usw.*/
+ 
+.restart-button {
+      background-color: #768cde;
+      color: #4df505;
+      padding: 15px 15px;
+      border: groove;
+      border-radius: 15px;
+      margin-top: 20px;
+	  margin-bottom: 20px;
+	  margin-left:2em;
+      cursor: pointer;
+	  font-size: 50px;
+	  width: 30%;
+      
+    }
+	  .show-all-button {
+
+      background-color: #768cde;
+      color: #4df505;
+      padding: 15px 15px;
+      border: groove;
+      border-radius: 15px;
+	  margin-left:4em;
+      margin-top: 20px;
+	  margin-bottom: 20px;
+      cursor: pointer;
+	  font-size: 18px;
+    }
+	.restart-button:hover {
+  background-color: #070124;
+}
+.show-all-button:hover {
+  background-color: #070124;
+}
+
+/* Setzt den oberen Seitenabstand des Hauptbereichs auf -3em.*/
+
+main{
+	margin-top: -3em;
+}
+
+/* header{ ... } und h2{ ... }: Definieren das Styling für den Header und die Überschrift im Spiel.*/
+
+header{
+	font-size: 50px;
+	color:#100969;
+	text-align: center;
+	border-color: #100969;
+	border-width: 10px;
+	border-style: groove ;
+	margin-left: 1em;
+}
+
+h2{
+	font-size:35px;
+	text-align: center;
+	color: #8b0a50;
+	margin-top: 1em;
+}
+
+.popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  background-color: #98f5ff; /* Hintergrundfarbe wie der Body */
+}
+
+.popup h1 {
+  font-size: 50px; /* Gleiche Schriftgröße wie H1 */
+  color: #100969; /* Gleiche Farbe wie H1 */
+}
+
+
+/* popup Einstellungen */
+
+.popup-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: #00008b;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+			font-size:35px;
+			text-align: center;
+			color: 	#adff2f;
+			
+        }
+
+        .close-button {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            cursor: pointer;
+        }
+		
+/* passen das Rasterlayout an kleinere Bildschirmgrößen an, indem sie die Anzahl der Spalten ändern.*/
+
+@media(max-width: 1000px){
+    .grid{
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media(max-width: 500px){
+    .grid{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+.restart-button {
+      background-color: #768cde;
+      color: #4df505;
+      padding: 5px 5px;
+      border: groove;
+      border-radius: 15px;
+      margin-top: 20px;
+	  margin-bottom: 20px;
+      cursor: pointer;
+	  font-size: 20px;
+	  width: 30%;
+      height: 30%;
+    }
+	  .show-all-button {
+
+      background-color: #768cde;
+      color: #4df505;
+      padding: 5px 5px;
+      border: groove;
+	  margin-left: 0;
+      border-radius: 15px;
+      margin-top: 20px;
+	  margin-bottom: 20px;
+      cursor: pointer;
+	  font-size: 20px;
+	  width: 30%;
+      height: 30%;
+    }
+	body{
+	margin-left: 0;
+	 max-width: 1200px;
+    background-color: #98f5ff;
+	}
+	main{
+	margin-top:0em;
+}

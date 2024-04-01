@@ -1,0 +1,268 @@
+.item1 { grid-area: header; }
+.item2 { grid-area: nav; }
+.item3 { grid-area: main; }
+.item4 { grid-area: header1;}
+.item6 { grid-area: footer; }
+
+.grid-container {
+
+	  display: grid;
+	  grid-template-columns: 80vw 20vw ;
+	  grid-template-rows: 	18em 25em auto ;
+	  grid-template-areas:
+		'header header '
+		'main main'
+		'footer nav';
+		
+	  background-color: #ffffe0;
+}
+ .custom-popup{
+  font-weight: 300;
+  color: white;
+  display: block;
+  position: absolute;
+  padding-top: 20%;
+  height: 15%;
+  width: 20%;
+  top: 42.5%;
+  left: 40%;
+	background-color: #393939;
+  border-radius: 0.75em;
+  padding: 1%;
+  font-size: 2em;
+  text-align: center	;
+  overflow: hidden; 
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+ }
+dialog:not([open]) {
+	display: none;
+}
+
+dialog[open]{
+    display: flex;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    background: #2D2D2D;
+    border: 0;
+    position: absolute;
+    top:1em;
+    height: 30%;
+	width:70%;
+    border-radius: 1em;
+    z-index: 0;
+    color: white;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
+	}
+
+dialog[open] p{
+	
+	
+	font-size: 300%;
+	padding: 2rem;
+	color: black;
+}
+
+dialog[open]::backdrop{
+	  background: rgba(0,0,0,0.1);
+	  backdrop-filter: blur(3px);
+	  width:200%;
+	  
+}
+.item2 {
+	/*display: none;*/
+}
+.playerName {
+  border-radius: 15px 15px 15px 15px;
+  border: solid 3px #4b4b4b;
+  background-color: #444444;
+  color: white;
+  display: block;
+  position: absolute;
+  bottom: 2.5%;
+  left: 1%;
+  width: 20%;
+  height: 5%;
+  font-size: 1.6em;
+  font-weight: 300;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.playerName::placeholder {
+  color: #E3E3E3;
+}
+
+p{
+	font-family:Arial;
+}
+main{
+ background-image: url("IMG/Logo.jpg");
+ background-repeat: no-repeat; 
+ background-size:1250px auto;
+ background-color: white;
+ }
+#canvasRules {
+    display: block;
+    position: absolute;
+    opacity: 95%;
+    background-color: #393939;
+    width: 80%;
+    height: fit-content;
+    left: 5%;
+    top: 5%;
+    padding: 5%;
+    border-radius: 5%;
+    color: white;
+}
+#RegelHinweis{
+	margin-top:-2em;
+	margin-left: -5em;
+	 font-size:18px;
+	 color: #FF0000;
+	 text-align: center;
+	 
+ }
+ #StädteQuiz {
+	 margin-top:1em;
+	 font-weight: 300;
+    color:#0000cd;
+    width: 30%;
+    height: 10%;
+    font-size: 1.1em;
+    background-color:rgb(127,255,0,0.5);
+    z-index: 100;
+    border-radius: 10px;
+	 margin-left: 23em;
+	 text-align: center;
+	 font-weight:bolder ;
+ }
+ 
+		
+ #Memory, #BilderRaetsel,#AllgemeineQuiz {
+	 margin-top:-0.5em;
+	 font-weight: 300;
+    color:#0000cd;
+    width: 30%;
+    height: 10%;
+    font-size: 1.1em;
+    background-color:rgb(127,255,0,0.5);
+    z-index: 100;
+    border-radius: 10px;
+	 margin-left: 23em;
+	 text-align: center;
+	 font-weight:bolder ;
+	 
+ }
+ #regeln, #impressum{
+	 margin-top:-0.5em;
+	 font-weight: 300;
+    color:#0000cd;
+    font-size: 24px;
+    background-color:rgb(127,255,0);
+    z-index: 100;
+    border-radius: 10px;
+	 text-align: center;
+	 font-weight:bolder ;
+	 margin-left:18em;
+ }
+ #spielerTabelle{
+	text-align:right;
+ }
+#impressum{
+	margin-top:0.25em;
+	width:30%;
+	height: 50px;
+}
+#regeln{
+	margin-top:0.5em;
+	background-color:#551a8b;
+	color:	#ffff00;
+	width:30%;
+	height: 50px;
+}
+#SpielStarten, #Absenden{
+	 margin-top:-0.5em;
+	 font-weight: 300;
+    color:#0000cd;
+    width: 20%;
+    height: 15%;
+    font-size: 25px;
+    background-color:rgb(127,255,0);
+    z-index: 100;
+    border-radius: 10px;
+	 text-align: center;
+	 font-weight:bolder ;
+	 margin-left:18em;
+}
+#SpielregelnBody{
+	background-color:#000080;
+}
+ #Spielregeln {
+	 font-size: 20px;
+	 font-family:Arial;
+	 }
+ h1{
+	 border: 14px solid;
+	 border-style:inset ;
+	 border-color:magenta;
+	 text-align: center;
+	 font-size:50px;
+	 background: linear-gradient(
+	 90deg,
+	 
+	 #023603 10%,
+	 #a020f0 20%,
+	 #6959cd 30%,
+	 #000080 40%,
+	 #0000ff 50%,
+	 #4876ff 60%,
+	 #444502 70%,
+	 #87cefa 80%,
+	 #333201 90%,
+	 #454504 100%
+	 );
+	background-clip: text;
+	-webkit-background-clip: text;
+	
+	color: transparent;
+	
+ }
+ 
+ h2{
+	 border: 14px solid;
+	 border-style:inset ;	 
+	 text-align: center;
+	 font-size:50px;
+	 background: linear-gradient(
+	 90deg,
+	 
+	 #ffff00 10%,
+	 #76ee00 40%,
+	 #ee00ee 70%,
+	 #97ffff 100%
+	 );
+	background-clip: text;
+	-webkit-background-clip: text;
+	
+	color: transparent;	
+ }
+ h4{	 
+	
+	 font-size:24px;
+	 text-align: center;
+	color: 	#eeb422;	
+	 
+ }
+h3 {
+	margin-top:-1em;
+	color:#191970;
+	font-size:20px;
+	text-align: center;
+	}
+h6 {
+	margin-top:-0.5em;
+	color:#228b22;
+	font-size:20px;
+	text-align: center;
+}
+body{
+	font-family:Arial;
+}
