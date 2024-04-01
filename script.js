@@ -2,7 +2,7 @@ const SpielStarten = document.getElementById('SpielStarten');
 let player1Points = 0;
 let rolesChosenFlag = false;
 
-document.getElementById("Datenlöschen").style.display = "none";
+document.getElementById("Datenlöschen").style.display = "block";
 document.getElementById("StädteQuiz").style.display = "none";
 document.getElementById("Memory").style.display = "none";
 document.getElementById("Absenden").style.display = "none";
@@ -269,11 +269,12 @@ document.getElementById("Datenlöschen").addEventListener("click", function() {
     }
 });
 
-document.getElementById("Absenden").addEventListener("click", function() { // Öffnende Klammer für Event-Listener-Funktion
+document.getElementById("Absenden").addEventListener("click", function() {
     const table = document.getElementById('spielerTabelle');
     const rows = table.rows;
     let tableData = [];
-    for (let i = 1; i < rows.length; i++) { // Start bei 1, um Überschriften zu überspringen // Öffnende Klammer für for-Schleife
+
+    for (let i = 0; i < rows.length; i++) { // Start bei 1, um Überschriften zu überspringen
         const cells = rows[i].cells;
         let rowData = {
             name: cells[0].textContent,
@@ -281,33 +282,31 @@ document.getElementById("Absenden").addEventListener("click", function() { // Ö
             time: cells[2].textContent
         };
         tableData.push(rowData);
-    } // Schließende Klammer für for-Schleife
+    }
 
-    fetch('Tabelle.php', {
+    fetch('send_email.php', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json' // Änderung zu application/json
         },
-        body: JSON.stringify({tableData: tableData})
-    }) // Keine Klammern erforderlich hier, da dies ein Methodenaufruf ist
-    .then(response => { // Öffnende Klammer für then-Funktion
-        if (!response.ok) { // Öffnende Klammer für if-Bedingung
+        body: JSON.stringify({tableData: tableData}) // Senden als JSON-Objekt
+    })
+    .then(response => {
+        if (!response.ok) {
             throw new Error('Network response was not ok');
-        } // Schließende Klammer für if-Bedingung
-        return response.json(); // Hier wird versucht, die Antwort als JSON zu parsen
-    }) // Schließende Klammer für then-Funktion
-    .then(data => { // Öffnende Klammer für zweite then-Funktion
-        if (data.success) { // Öffnende Klammer für if-Bedingung
-            console.log('Daten erfolgreich in Excel gespeichert');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            console.log('Daten erfolgreich gespeichert');
             // Weitere Aktionen...
-        } else { // Schließende Klammer für if-Bedingung und öffnende Klammer für else-Block
-            console.error('Fehler beim Speichern der Daten in Excel');
+        } else {
+            console.error('Fehler beim Speichern der Daten in Jsondatei:', data.error || 'Unbekannter Fehler');
             // Fehlerbehandlung...
-        } // Schließende Klammer für else-Block
-    }) // Schließende Klammer für zweite then-Funktion
-    .catch((error) => { // Öffnende Klammer für catch-Funktion
+        }
+    })
+    .catch((error) => {
         console.error('Fehler:', error);
-    }); // Schließende Klammer für catch-Funktion
-}); // Fehlender schließender Block könnte hier sein
-
-// Stellen Sie sicher, dass alle anderen Blöcke oder Funktionen ebenfalls korrekt geschlossen sind.
+    });
+});
