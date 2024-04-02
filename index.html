@@ -10,6 +10,8 @@
 </head>
 	<body class="grid-container">
 		<header class="item1">
+		<button id="Datenlöschen">Tabelle senden</button>
+		<button id="Datenreinigen" onclick="clearTableData()">löschen</button>
 		<figure>
 			<h1> Willkommen bei unserem Ausflug 2024</h1>
 		</figure>
@@ -18,10 +20,11 @@
 					<p id="RegelHinweis"> Die Regeln findet ihr unter dem Button Regeln</p>
 					<button id="SpielStarten"><b>Spielstarten</b></button>
 					<button id="Absenden"><b>Sende die Aufgaben ein</b></button>
+					<button id="Neu"><b>Spiel neu Laden</b></button>
 		
 		</header>
 		<main class="item3">
-		
+			<div id="Button">
 			  <a href="StaedteQuiz.html"target="_blank"><button id="StädteQuiz"><b>Städte Quiz Mannheim</b></button></a>
 		<br>
 			<a href="SkatMemory.html"target="_blank"><button id="Memory"><b>Skat Memory</b></button></a>
@@ -30,9 +33,10 @@
 		<br>
 		<a href="AllgemeineQuiz.html"target="_blank"><button id="AllgemeineQuiz"><b>Allgemeine Quiz</b></button></a>
 		<br>
+		</div>
 		</main>
 	<footer>
-	<button id="Datenlöschen" onclick="clearTableData()">Daten löschen</button>
+	
 	
 		<div class="playerNames">
     <input type="text" class="playerName" id="player1Name" placeholder="Spieler 1">

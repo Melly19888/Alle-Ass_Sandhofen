@@ -13,33 +13,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $message .= "Name: " . $row['name'] . ", Punkte: " . $row['points'] . ", Zeit: " . $row['time'] . "\n";
         }
 
-        // Definieren Sie die E-Mail-Empfänger und Betreff
-        $to = 'empfaenger@beispiel.de';
-        $subject = 'Spielstand';
+        // Pfad zur JSON-Datei
+        $file_path = 'IMG/Spieldaten/spieldaten.json';
 
-        // Verwenden Sie zusätzliche Header für Absenderinformationen etc.
-        $headers = 'From: ausflug2024@melanie-bueckner.de' . "\r\n" .
-                   'Reply-To: ausflug2024@gmail.com' . "\r\n" .
-                   'X-Mailer: PHP/' . phpversion();
-
-        // Versenden der E-Mail
-        if (mail($to, $subject, $message, $headers)) {
-            // Speichern der Daten in einer JSON-Datei
-            $file_path = 'IMG/Spieldaten/spieldaten.json'; // Pfad zur JSON-Datei
-            if (!file_exists(dirname($file_path))) {
-                mkdir(dirname($file_path), 0777, true); // Erstellen des Verzeichnisses falls nicht vorhanden
+        // Lese vorhandene Daten aus der Datei
+        if (file_exists($file_path)) {
+            $existing_data = json_decode(file_get_contents($file_path), true);
+            if (!is_array($existing_data)) {
+                $existing_data = [];
             }
-            file_put_contents($file_path, json_encode($tableData)); // Speichern der Daten
-
-            echo json_encode(array("success" => true));
-            exit;
         } else {
-            echo json_encode(array("success" => false));
-            exit;
+            $existing_data = [];
         }
+
+        // Füge neue Daten zu den vorhandenen Daten hinzu
+        foreach ($tableData as $newRow) {
+            array_push($existing_data, $newRow);
+        }
+
+        // Speichern der aktualisierten Daten in der Datei
+        if (!file_exists(dirname($file_path))) {
+            mkdir(dirname($file_path), 0777, true); // Erstellen des Verzeichnisses falls nicht vorhanden
+        }
+
+        file_put_contents($file_path, json_encode($existing_data));
+
+        echo json_encode(array("success" => true));
     } else {
         echo json_encode(array("success" => false, "error" => "Invalid data"));
-        exit;
     }
 }
 ?>

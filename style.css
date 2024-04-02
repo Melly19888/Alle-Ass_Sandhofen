@@ -93,6 +93,9 @@ dialog[open]::backdrop{
 p{
 	font-family:Arial;
 }
+figure{
+	margin-top:-2em;
+}
 main{
  background-image: url("IMG/Logo.jpg");
  background-repeat: no-repeat; 
@@ -125,7 +128,7 @@ main{
 	 font-weight: 300;
     color:#0000cd;
     width: 30%;
-    height: 10%;
+    height: 50px;
     font-size: 1.1em;
     background-color:rgb(127,255,0,0.5);
     z-index: 100;
@@ -134,14 +137,56 @@ main{
 	 text-align: center;
 	 font-weight:bolder ;
  }
- 
-		
+ #Button{
+	 margin-top:5em;
+ }
+ #Neu{
+	  margin-top:-0.5em;
+	font-weight: 300;
+    color:#0000cd;
+    width: 30%;
+    height: 15%;
+    font-size: 18px;
+    background-color:rgb(127,255,0);
+    z-index: 100;
+    border-radius: 10px;
+	 text-align: center;
+	 font-weight:bolder ;
+	 margin-left:16.5em;
+ }
+ #Absenden{
+	 margin-top:-0.5em;
+	font-weight: 300;
+    color:#0000cd;
+    width: 30%;
+    height: 15%;
+    font-size: 18px;
+    background-color:rgb(127,255,0);
+    z-index: 100;
+    border-radius: 10px;
+	 text-align: center;
+	 font-weight:bolder ;
+	 margin-left:22em;
+ }
+ #Datenlöschen, #Neu{
+	 
+	margin-top:0em;
+	 font-weight: 300;
+    color:	#000080;
+    font-size: 24px;
+    background-color:	#eeaeee;
+    
+    border-radius: 10px;
+	 text-align: center;
+	 font-weight:bolder ;
+	 
+ }
  #Memory, #BilderRaetsel,#AllgemeineQuiz {
 	 margin-top:-0.5em;
 	 font-weight: 300;
     color:#0000cd;
     width: 30%;
-    height: 10%;
+    height: 50px;
     font-size: 1.1em;
     background-color:rgb(127,255,0,0.5);
     z-index: 100;
@@ -178,7 +223,7 @@ main{
 	width:30%;
 	height: 50px;
 }
-#SpielStarten, #Absenden{
+#SpielStarten{
 	 margin-top:-0.5em;
 	 font-weight: 300;
     color:#0000cd;
