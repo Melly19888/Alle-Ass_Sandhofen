@@ -16,7 +16,7 @@
 		
 	  background-color: #ffffe0;
 }
- .custom-popup{
+.custom-popup{
   font-weight: 300;
   color: white;
   display: block;
@@ -34,39 +34,6 @@
   overflow: hidden; 
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
  }
-dialog:not([open]) {
-	display: none;
-}
-
-dialog[open]{
-    display: flex;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-    background: #2D2D2D;
-    border: 0;
-    position: absolute;
-    top:1em;
-    height: 30%;
-	width:70%;
-    border-radius: 1em;
-    z-index: 0;
-    color: white;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
-	}
-
-dialog[open] p{
-	
-	
-	font-size: 300%;
-	padding: 2rem;
-	color: black;
-}
-
-dialog[open]::backdrop{
-	  background: rgba(0,0,0,0.1);
-	  backdrop-filter: blur(3px);
-	  width:200%;
-	  
-}
 .item2 {
 	/*display: none;*/
 }
@@ -85,11 +52,76 @@ dialog[open]::backdrop{
   font-weight: 300;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
 }
-
 .playerName::placeholder {
   color: #E3E3E3;
 }
 
+h1{
+	 border: 14px solid;
+	 border-style:inset ;
+	 border-color:magenta;
+	 text-align: center;
+	 font-size:50px;
+	 background: linear-gradient(
+	 90deg,
+	 
+	 #023603 10%,
+	 #a020f0 20%,
+	 #6959cd 30%,
+	 #000080 40%,
+	 #0000ff 50%,
+	 #4876ff 60%,
+	 #444502 70%,
+	 #87cefa 80%,
+	 #333201 90%,
+	 #454504 100%
+	 );
+	background-clip: text;
+	-webkit-background-clip: text;
+	
+	color: transparent;
+	
+ }
+h2{
+	 border: 14px solid;
+	 border-style:inset ;	 
+	 text-align: center;
+	 font-size:50px;
+	 background: linear-gradient(
+	 90deg,
+	 
+	 #ffff00 10%,
+	 #76ee00 40%,
+	 #ee00ee 70%,
+	 #97ffff 100%
+	 );
+	background-clip: text;
+	-webkit-background-clip: text;
+	
+	color: transparent;	
+ }
+h4{	 
+	
+	 font-size:24px;
+	 text-align: center;
+	color: 	#eeb422;	
+	 
+ }
+h3 {
+	margin-top:-1em;
+	color:#191970;
+	font-size:20px;
+	text-align: center;
+	}
+h6 {
+	margin-top:-0.5em;
+	color:#228b22;
+	font-size:20px;
+	text-align: center;
+}
+body{
+	font-family:Arial;
+}
 p{
 	font-family:Arial;
 }
@@ -101,6 +133,62 @@ main{
  background-repeat: no-repeat; 
  background-size:1250px auto;
  background-color: white;
+ }
+dialog:not([open]) {
+	display: none;
+}
+dialog[open]{
+    display: flex;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    background: #2D2D2D;
+    border: 0;
+    position: absolute;
+    top:1em;
+    height: 30%;
+	width:70%;
+    border-radius: 1em;
+    z-index: 0;
+    color: white;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
+	}
+dialog[open] p{
+	
+	
+	font-size: 300%;
+	padding: 2rem;
+	color: black;
+}
+dialog[open]::backdrop{
+	  background: rgba(0,0,0,0.1);
+	  backdrop-filter: blur(3px);
+	  width:200%;
+	  
+}
+#h1{
+	 border: 14px solid;
+	 border-style:inset ;
+	 border-color:magenta;
+	 text-align: center;
+	 font-size:50px;
+	 background: linear-gradient(
+	 90deg,
+	 
+	 #023603 5%,
+	 #a020f0 12%,
+	 #6959cd 17%,
+	 #000080 24%,
+	 #0000ff 30%,
+	 #4876ff 36%,
+	 #444502 42%,
+	 #87cefa 48%,
+	 #333201 54%,
+	 #454504 60%
+	 );
+	background-clip: text;
+	-webkit-background-clip: text;
+	
+	color: transparent;
+	
  }
 #canvasRules {
     display: block;
@@ -244,70 +332,4 @@ main{
 	 font-size: 20px;
 	 font-family:Arial;
 	 }
- h1{
-	 border: 14px solid;
-	 border-style:inset ;
-	 border-color:magenta;
-	 text-align: center;
-	 font-size:50px;
-	 background: linear-gradient(
-	 90deg,
-	 
-	 #023603 10%,
-	 #a020f0 20%,
-	 #6959cd 30%,
-	 #000080 40%,
-	 #0000ff 50%,
-	 #4876ff 60%,
-	 #444502 70%,
-	 #87cefa 80%,
-	 #333201 90%,
-	 #454504 100%
-	 );
-	background-clip: text;
-	-webkit-background-clip: text;
-	
-	color: transparent;
-	
- }
- 
- h2{
-	 border: 14px solid;
-	 border-style:inset ;	 
-	 text-align: center;
-	 font-size:50px;
-	 background: linear-gradient(
-	 90deg,
-	 
-	 #ffff00 10%,
-	 #76ee00 40%,
-	 #ee00ee 70%,
-	 #97ffff 100%
-	 );
-	background-clip: text;
-	-webkit-background-clip: text;
-	
-	color: transparent;	
- }
- h4{	 
-	
-	 font-size:24px;
-	 text-align: center;
-	color: 	#eeb422;	
-	 
- }
-h3 {
-	margin-top:-1em;
-	color:#191970;
-	font-size:20px;
-	text-align: center;
-	}
-h6 {
-	margin-top:-0.5em;
-	color:#228b22;
-	font-size:20px;
-	text-align: center;
-}
-body{
-	font-family:Arial;
-}
+

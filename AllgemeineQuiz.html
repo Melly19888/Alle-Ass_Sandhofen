@@ -3,20 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skat Spiel</title>
-<link rel="stylesheet" href="style.css">
+<title>Skat allgemein Quiz</title>
+<link rel="stylesheet" href="QuizStyle.css">
 <link href="script.js">
 </head>
 <body>
 <header>
 	<figure>
-			<h1> Das Allgemein Quiz</h1>
+			<h1 id="h1"> Das Allgemein Quiz</h1>
 		</figure>
+		
+			<h2 id="timer">Zeit: 0 Sekunden</h2>
 </header>
+<main>
 		<div>
-			<h5>Schnell nochmal NUTELLA rückwärts schreiben, bevor es…?</h5>
+			<h5>1.Schnell nochmal NUTELLA rückwärts schreiben, bevor es…?</h5>
 
-				<form action="/submit-your-answer" method="post">
+				<form id="nutellaForm">
 				  <input type="radio" id="jederMacht" name="nutellaQuestion" value="A">
 				  <label for="jederMacht">A) Jeder macht</label><br>
 
@@ -28,9 +31,9 @@
 				<!-- <p>Die Antwort auf die Frage (NUTELLA rückwärts): <strong>ALLETUN</strong></p> -->
 				  
 				</form>
-			<h5>Nachdem ihnen allen übel mitgespielt wurde, fahren vier Mädchenheldinnen zur Erholung aufs Land. Wer fährt nach Prenzlau, um sich dort buchstäblich selbst zu finden?</h5>
+			<h5>2.Nachdem ihnen allen übel mitgespielt wurde, fahren vier Mädchenheldinnen zur Erholung aufs Land. Wer fährt nach Prenzlau, um sich dort buchstäblich selbst zu finden?</h5>
 
-					<form action="/submit-your-answer" method="post">
+					<form id="maerchenForm">
 					  <input type="radio" id="dornroeschen" name="maerchenfigur" value="A">
 					  <label for="dornroeschen">A) Dornröschen</label><br>
 
@@ -45,9 +48,9 @@
 					  
 			<!-- <p>Die Antwort auf die Frage (D) Rapunzel) </p> -->
 					</form>
-			<h5>Welche Uhrzeit verhält sich im Prinzip so wie 10:22:01?</h5>
+			<h5>3.Welche Uhrzeit verhält sich im Prinzip so wie 10:22:01?</h5>
 
-					<form action="/submit-your-answer" method="post">
+					<form id="palindromeTime">
 					  <input type="radio" id="optionA" name="palindromeTime" value="A">
 					  <label for="optionA">A) 12:11:12</label><br>
 
@@ -57,13 +60,13 @@
 					  <input type="radio" id="optionC" name="palindromeTime" value="C">
 					  <label for="optionC">C) 23:19:32</label><br>
 					  
-				<!-- <p>Die Antwort auf die Frage A) 12:11:12) </p> -->  
+				<!-- <p>Die Antwort auf die Frage B) 15:44:51) </p> -->  
 					</form>					  
-				<h5>Wir räumen mit Vorurteilen auf. Welches Vorurteil über Deutsche haben wir hier schon 
+				<h5>4.Wir räumen mit Vorurteilen auf. Welches Vorurteil über Deutsche haben wir hier schon 
 				mal alphabetisch geordnet?</h5>
-					<p>AAABCDEEEEEEEGGHHLLNNNRRSTTUWZ</p>
+					<h6>AAABCDEEEEEEEGGHHLLNNNRRSTTUWZ</h6>
 
-					<form action="/submit-your-answer" method="post">
+					<form id="deutscheVorurteile">
 					  <input type="radio" id="vorurteilA" name="deutscheVorurteile" value="A">
 					  <label for="vorurteilA">A) Alle Deutschen lieben ihr Auto</label><br>
 
@@ -73,12 +76,12 @@
 					  <input type="radio" id="vorurteilC" name="deutscheVorurteile" value="C">
 					  <label for="vorurteilC">C) Alle Deutschen haben Gartenzwerge</label><br>
 
-				<!-- <p>Die Antwort auf die Frage B) Alle Deutschen tragen in Sandalen Socken. </p> -->  	  
+				<!-- <p>Die Antwort auf die Frage C) Alle Deutschen haben Gartenzwerge. </p> -->  	  
 					</form>
 
-					<h5>Bei welchen dieser Herren ist der Name nicht weiter bedeutend?</h5>
+					<h5>5.Bei welchen dieser Herren ist der Name nicht weiter bedeutend?</h5>
 
-					<form id="quizForm">
+					<form id="namenQuiz">
 					  <input type="radio" id="tomBola" name="namenQuiz" value="A">
 					  <label for="tomBola">A) Tom Bola</label><br>
 
@@ -93,22 +96,196 @@
 
 					  <input type="radio" id="joKer" name="namenQuiz" value="E">
 					  <label for="joKer">E) Jo Ker</label><br>
-		<!-- <p>Die Antwort auf die Frage c)  Der Name 'Ben Zin' ist nicht weiter bedeutend. </p> -->  	  
-					<div class="quiz-container">
+					  </form>
+		<!-- <p>Die Antwort auf die Frage D)  Der Name 'Karl Ender' ist nicht weiter bedeutend. </p> -->  	  
+	<div class="quiz-container">
   
-  <h5>Welche Zahl gehört an die Stelle des Fragezeichens?</h5>
+  <h5>6.Welche Zahl gehört an die Stelle des Fragezeichens?</h5>
+	<br>
+ <form id="würfel">
+    <img src="IMG/Quiz-A/Würfel.png" >
+    <br>
+	<br>
+	 <input type="number" id="an" placeholder="Deine Antwort">
+    
+    <!-- <p>Die Antwort auf die Frage ist 1 </p> -->
+</form>
+  <h5>7.Finn soll alle 20 Minuten eine Tablette einnehmen. Wann nimmt er die letzte Tablette ein?</h5>
 
+<form id="finnForm">
+  <input type="radio" id="finnA" name="finn" value="A">
+  <label for="finnA">A) In 20 Minuten</label><br>
+
+  <input type="radio" id="finnB" name="finn" value="B">
+  <label for="finnB">B) In 40 Minuten</label><br>
+
+  <input type="radio" id="finnC" name="finn" value="C">
+  <label for="finnC">C) In 60 Minuten</label><br>
  
-  <img src="IMG/Quiz-A/Würfel.png" >
+  <!-- <p>Die Antwort auf die Frage ist C in 60 Minuten </p> -->  
+</form>
 
-  <form id="quiz-form">
-    <input type="number" id="answer" name="answer" required placeholder="Ihre Antwort">
-   <!-- <p>Die Antwort auf die Frage ist 1 </p> -->  
-  </form>
+<h5>8.Wenn Sonja mit Ajnos befreundet ist und Lukas mit Klaus, wer ist dann mit Aron befreundet?</h5>
 
-  <div id="result"></div>
+<form id="sonja">
+	 <input type="radio" id="sonjaA" name="sonja" value="A">
+   <label for="sonjaA">A) Seven</label><br>
+
+   <input type="radio" id="sonjaB" name="sonja" value="B">
+   <label for="sonjaB">B) Nora</label><br>
+  
+</form>
+   <!-- <p>Die Antwort auf die Frage ist B Nora </p> --> 
+  <div id="riddle">
+  <h5>9.Wenn ich aufrecht stehe, bin ich eine Zahl.
+	Wenn ich auf der Seite liege, gibt es kein Ende.
+  Wenn man mich in der Mitte durchschneidet, bin ich doppelt nichts.
+  Welche Zahl bin ich?</h5>
+ 
+   <input type="text" id="Zahl" placeholder="Deine Antwort">
+  
+</div>
+	 <!-- <p>Die Antwort auf die Frage ist 8 </p> -->
+	<div id="riddl">
+  <h5>10.Was muss man einer Ameise wegnehmen, damit sie fliegen kann?</h5>
+
+  <input type="text" id="Ameise" placeholder="Deine Antwort">
+</div>
+	 <!-- <p>Die Antwort auf die Frage ist A/a </p> -->
+	 
+  <div id="Kroko"></div>
 </div>  
-							</div>
-					<input type="submit" value="Antwort einreichen">
+ <div id="riddle">
+  <h5>11.Welche in Amerika und China beheimatete Krokodil-Art kann man auch in der Republik Äquatorialguinea finden?</h5>
+
+  <form>
+	<input type="radio" name="answer" value="A"> A) Aligator<br>
+  <input type="radio" name="answer" value="B"> B) Spitzmaulkrokodil<br>
+  <input type="radio" name="answer" value="C"> C) Salzwasserkorokodil<br><br>
+  </form>
+  
+ <!-- <p>Die Antwort auf die Frage ist A) Aligator</p> -->
+</div>
+<div>
+	<h5>12.Welches Streichholz muss man wegnehmen das die Gleichung stimmt?</h5>
+	<br>
+	<img src="IMG/Quiz-A/Streichhölzer.jpg">
+	<br>
+	<br>
+  <form id="Streichholz">
+   <input type="radio" name="answe" value="A"> A<br>
+  <input type="radio" name="answe" value="B"> B <br>
+  <input type="radio" name="answe" value="C"> C <br>
+   <input type="radio" name="answe" value="D"> D<br>
+  <input type="radio" name="answe" value="E"> E <br>
+  <input type="radio" name="answe" value="F"> F <br>
+   <input type="radio" name="answe" value="G"> G<br>
+  <input type="radio" name="answe" value="H"> H <br>
+  <input type="radio" name="answe" value="I">I <br>
+  </form>
+  <br>
+  
+  <!-- <p>Die Antwort auf die Frage ist F) F> -->
+</div>
+  </div>
+  
+ <div >
+  <h5>13.Christina läuft einen Marathon und fällt nachdem sie lange in Führung gelegen hat,
+  auf den dritten Platz zurück. Unter Einsatz ihrer letzten Kraftreserven gelingt es ihr 
+  kurz vor dem Zieleinlauf, die zweitschnellste Läuferin zu überholen. Auf welchen Platz 
+  beendet Christina als das Rennen?</h5>
+ <form id="result">
+					  <input type="radio" id="4" name="result" value="A">
+					  <label for="4">A) 4</label><br>
+
+					  <input type="radio" id="2" name="result" value="B">
+					  <label for="2">B) 2</label><br>
+
+					  <input type="radio" id="1" name="result" value="C">
+					  <label for="1">C) 1</label><br>
+
+					  <input type="radio" id="3" name="result" value="D">
+					  <label for="3">D) 3</label><br>
+	</form>
+			</div>
+
+  <h5>14.Drei Menschen befinden sich in einem Raum. Alles schütteln einander zur Begrüßung genau einmal die Hand. Wie viele Handschläge reichen dafür aus?</h5>
+<form id="ri">
+					  <input type="radio" id="4" name="ri" value="A">
+					  <label for="4">A) 3</label><br>
+
+					  <input type="radio" id="2" name="ri" value="B">
+					  <label for="2">B) 4</label><br>
+
+					  <input type="radio" id="1" name="ri" value="C">
+					  <label for="1">C) 5</label><br>
+
+					  <input type="radio" id="3" name="ri" value="D">
+					  <label for="3">D) 6</label><br>
+					  
+					  <input type="radio" id="5" name="ri" value="E">
+					  <label for="4">E) 7</label><br>
+					  <input type="radio" id="5" name="ri" value="F">
+					  <label for="4">F) 8</label><br>
+					   <input type="radio" id="5" name="ri" value="G">
+					  <label for="4">G) 9</label><br>
+
+	</form>
+							
+
+  <h5>15.Wenn „7+3 = Oktober“ lautet und „9-4 = Mai“, was ist dann „5+2“?</h5>
+
+  <form id="rid">
+					  <input type="radio" id="4" name="rid" value="A">
+					  <label for="1">Januar</label><br>
+
+					  <input type="radio" id="2" name="rid" value="B">
+					  <label for="2">B) Februar</label><br>
+
+					  <input type="radio" id="3" name="rid" value="C">
+					  <label for="3">C) März</label><br>
+
+					  <input type="radio" id="4" name="rid" value="D">
+					  <label for="4">D) April</label><br>
+					  
+					  <input type="radio" id="5" name="rid" value="E">
+					  <label for="5">E) Mai</label><br>
+					  <input type="radio" id="6" name="rid" value="F">
+					  <label for="6">F) Juni</label><br>
+					   <input type="radio" id="7" name="rid" value="G">
+					  <label for="7">G) Juli</label><br>
+					  <input type="radio" id="8" name="rid" value="H">
+					  <label for="8">H) August</label><br>
+
+					  <input type="radio" id="9" name="rid" value="I">
+					  <label for="9">I) September</label><br>
+
+					  <input type="radio" id="10" name="rid" value="J">
+					  <label for="10">J) Oktober</label><br>
+
+					  <input type="radio" id="11" name="rid" value="K">
+					  <label for="11">K) November</label><br>
+					  
+					  <input type="radio" id="12" name="rid" value="L">
+					  <label for="12">L) Dezember</label><br>
+					  
+	</form>
+ 
+ 
+ 
+	<h5>16. Welcher dieser Sätze liest sich vorwärts wie rückwärts gleich?</h5>
+	 <div id="palindromeForm">
+	 <form>
+   <input type="radio" name="ans" value="A"> A) Eine Herde bedrohe nie!<br>
+  <input type="radio" name="ans" value="B">  B) Elly biss Sibylle! <br>
+  <input type="radio" name="ans" value="C"> C) Erik feuert untreue Fakire! <br>
+  </form>
+		</div>
+		<!-- <p>Die Antwort auf die Frage ist B) </p> -->
+							<br>
+	
+	<input id="Button" type="submit" value="Antwort einreichen" >
+</main>
+<script src="QuizScript.js"></script>
 </body>
 </html>

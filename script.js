@@ -24,32 +24,78 @@ let tableData = [];
         }
         tableData.push(rowData.join(' | '));
     }
-
 function loadAndDisplayResults() {
-    // Abrufen der Daten aus dem Local Storage
-    let points = localStorage.getItem('memoryGameMoves');
-    let time = localStorage.getItem('memoryGameTime');
-    let playerName = localStorage.getItem('playerName') || 'Anonym';
+    // Abrufen der Daten aus dem Local Storage für das Memory-Spiel
+    let memoryGamePoints = localStorage.getItem('memoryGameMoves') || '0';
+    let memoryGameTime = localStorage.getItem('memoryGameTime') || '00:00';
 
-    // Überprüfen, ob Daten vorhanden sind
-    if (points && time) {
-        // Erstellen einer neuen Zeile für die Tabelle
+    // Abrufen der Daten aus dem Local Storage für das Quiz
+    let quizPoints = localStorage.getItem('quizPoints') || '0';
+    let quizTime = localStorage.getItem('quizTime') || '00:00';
+
+    // Spielername abrufen; stellen Sie sicher, dass dieser Schritt vorher validiert wurde
+    let playerName = localStorage.getItem('playerName');
+
+    if (!playerName) {
+        console.error("Spielername fehlt im Local Storage.");
+        return; // Beenden Sie die Funktion frühzeitig, wenn kein Spielername vorhanden ist
+    }
+
+    // Berechnen der kombinierten Zeit
+    let combinedTime = formatCombinedTime(memoryGameTime, quizTime);
+
+    // Erstellen einer neuen Zeile für die Tabelle oder Aktualisieren einer bestehenden Zeile
+    const tableBody = document.getElementById('spielerTabelle').querySelector('tbody');
+
+    // Prüfen Sie, ob eine Zeile mit diesem Spielernamen bereits existiert
+    let existingRow = [...tableBody.rows].find(row => row.cells[0].textContent === playerName);
+
+    if (existingRow) {
+        existingRow.cells[1].textContent = parseInt(memoryGamePoints) + parseInt(quizPoints);
+        existingRow.cells[2].textContent = combinedTime;
+    } else {
         let newRow = document.createElement('tr');
         newRow.innerHTML = `
             <td>${playerName}</td>
-            <td>${points}</td>
-            <td>${time}</td>
+            <td>${parseInt(memoryGamePoints) + parseInt(quizPoints)}</td>
+            <td>${combinedTime}</td>
         `;
-
-        // Hinzufügen der neuen Zeile zur Tabelle
-        const tableBody = document.getElementById('spielerTabelle').querySelector('tbody');
         tableBody.appendChild(newRow);
 
         // Optional: Löschen Sie die gespeicherten Werte, wenn sie nicht mehr benötigt werden.
         localStorage.removeItem('memoryGameMoves');
         localStorage.removeItem('memoryGameTime');
+        localStorage.removeItem('quizPoints');
+        localStorage.removeItem('quizTime');
         localStorage.removeItem('playerName');
     }
+}
+
+// Diese Funktion wird alle 3 Sekunden aufgerufen, um die Tabelle zu aktualisieren
+function updateTablePeriodically() {
+    // Hier rufen Sie Ihre Logik zum Laden und Anzeigen der Ergebnisse auf
+    loadAndDisplayResults();
+}
+// Hilfsfunktion zum Kombinieren und Formatieren von Zeitangaben im Format "MM:SS"
+function formatCombinedTime(memoryGameTime, quizTime) {
+    const totalSecondsMemory = convertTimeToSeconds(memoryGameTime);
+    const totalSecondsQuiz = convertTimeToSeconds(quizTime);
+
+    const totalSecondsCombined = totalSecondsMemory + totalSecondsQuiz;
+
+    return convertSecondsToTimeString(totalSecondsCombined);
+}
+// Hilfsfunktion zum Konvertieren einer Zeitangabe im Format "MM:SS" in Sekunden
+function convertTimeToSeconds(timeString) {
+    const [minutes, seconds] = timeString.split(':').map(Number);
+    return minutes * 60 + seconds;
+}
+// Hilfsfunktion zum Konvertieren von Sekunden in eine Zeitangabe im Format "MM:SS"
+function convertSecondsToTimeString(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
 function EMail(){
 	 const tableDataString = localStorage.getItem('tableData');
@@ -102,26 +148,6 @@ function addPlayerToTable(playerName) {
     timeCell.textContent = ''; // Initialwert für Zeit
 
     saveTableData(); // Speichern Sie die aktualisierte Tabelle
-}
-function updatePlayerData() {
-  let moves = localStorage.getItem('memoryGameMoves');
-  let time = localStorage.getItem('memoryGameTime');
-  let playerName = localStorage.getItem('playerName');
-
-  if (moves && time && playerName) {
-    const tableBody = document.querySelector("#spielerTabelle tbody") || document.querySelector("#spielerTabelle");
-
-    // Finden Sie die Zeile des Spielers basierend auf dem Namen
-    for (let row of tableBody.rows) {
-      if (row.cells[0].textContent === playerName) {
-        row.cells[1].textContent = moves; // Aktualisieren der Punkte
-        row.cells[2].textContent = time; // Aktualisieren der Zeit
-        break; // Beenden der Schleife nach dem Finden des Spielers
-      }
-    }
-
-    saveTableData(); // Speichern der aktualisierten Tabelle
-  }
 }
 function saveTableData() {
     const table = document.getElementById('spielerTabelle');
@@ -197,8 +223,46 @@ function updatePlayerData() {
             newRow.insertCell(1).textContent = moves;
             newRow.insertCell(2).textContent = time;
         }
+
+        saveTableData(); // Speichern der aktualisierten Tabelle
     }
-}	
+}
+function updateTableWithQuizResults() {
+  const playerName = localStorage.getItem('playerName');
+  const quizPoints = localStorage.getItem('quizPoints');
+  const quizTime = localStorage.getItem('quizTime');
+
+  if (playerName && quizPoints && quizTime) {
+    const tableBody = document.querySelector("#spielerTabelle tbody");
+    for (let row of tableBody.rows) {
+      if (row.cells[0].textContent === playerName) {
+        // Addiere Punkte und Zeit zu den bestehenden Werten
+        let currentPoints = parseInt(row.cells[1].textContent);
+        let currentTime = row.cells[2].textContent; // Format: 'MM:SS'
+
+        // Konvertiere beide Zeiten in Sekunden für einfache Addition
+        let totalSecondsCurrent = convertTimeToSeconds(currentTime);
+        let totalSecondsNew = convertTimeToSeconds(quizTime);
+
+        // Aktualisiere Punkte und Zeit
+        row.cells[1].textContent = currentPoints + parseInt(quizPoints);
+        row.cells[2].textContent = convertSecondsToTime(totalSecondsCurrent + totalSecondsNew);
+
+        break;
+      }
+    }
+  }
+}
+// Hilfsfunktionen zur Zeitumrechnung
+function convertTimeToSeconds(time) {
+  const [minutes, seconds] = time.split(':').map(Number);
+  return minutes * 60 + seconds;
+}
+function convertSecondsToTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+}
 function checkAndShowSubmitButton() {
     if (clickedButtonsCount === totalButtonsToClick) {
         document.getElementById("Absenden").style.display = "block";
@@ -262,9 +326,6 @@ function loadGameData() {
   }
 }
 // Funktion zum Aktualisieren der Tabelle alle 5 Sekunden
-
-
-
 SpielStarten.addEventListener('click', function(event) {
     const player1NameInput = document.getElementById("player1Name");
 
@@ -307,6 +368,7 @@ SpielStarten.addEventListener('click', function(event) {
 });
 // Aufruf der Funktion beim Laden der Seite
 window.addEventListener('load', function() {
+	setInterval(updateTablePeriodically, 3000);
      // Initialer Aufruf, um die Daten sofort beim Laden anzuzeigen
     startTableUpdateInterval(); // Starte das regelmäßige Aktualisierungsintervall	
 	insertPlayerData();
@@ -344,6 +406,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	  insertPlayerData();
 	  startTableUpdateInterval();
 	  updatePlayerData();
+	  updateTableWithQuizResults()
 });
 document.getElementById("Datenlöschen").addEventListener("click", function() {
 EMail();

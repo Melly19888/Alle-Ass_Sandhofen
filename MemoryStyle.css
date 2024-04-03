@@ -122,7 +122,32 @@ Cursor-Eigenschaft und Hintergrundfarbe.*/
 .show-all-button:hover {
   background-color: #070124;
 }
-
+h1{
+	 border: 14px solid;
+	 border-style:inset ;
+	 border-color:magenta;
+	 text-align: center;
+	 font-size:50px;
+	 background: linear-gradient(
+	 90deg,
+	 
+	 #023603 10%,
+	 #a020f0 20%,
+	 #6959cd 30%,
+	 #000080 40%,
+	 #0000ff 50%,
+	 #4876ff 60%,
+	 #444502 70%,
+	 #87cefa 80%,
+	 #333201 90%,
+	 #454504 100%
+	 );
+	background-clip: text;
+	-webkit-background-clip: text;
+	
+	color: transparent;
+	
+ }
 /* Setzt den oberen Seitenabstand des Hauptbereichs auf -3em.*/
 
 main{
@@ -214,7 +239,7 @@ h2{
 }
 .restart-button {
       background-color: #768cde;
-      color: #4df505;
+      color: #100661;
       padding: 5px 5px;
       border: groove;
       border-radius: 15px;
@@ -228,7 +253,7 @@ h2{
 	  .show-all-button {
 
       background-color: #768cde;
-      color: #4df505;
+      color: #100661;
       padding: 5px 5px;
       border: groove;
 	  margin-left: 0;
@@ -243,7 +268,7 @@ h2{
 	body{
 	margin-left: 0;
 	 max-width: 1200px;
-    background-color: #98f5ff;
+    background-color: #07f078;
 	}
 	main{
 	margin-top:0em;

@@ -2,25 +2,20 @@ document.getElementById("absenden").style.display = "none";
 
 // Karten Bilder info
 let cardsList = [
-      {"name" : "Melly1", "img_src" : "IMG/Memo/img1.png"},
- // {"name" : "Melly2", "img_src" : "IMG/Memo/img2.png"},
-//{"name" : "Melly3", "img_src" : "IMG/Memo/img3.png"},
-// {"name" : "Melly4", "img_src" : "IMG/Memo/img4.png"},
-//{"name" : "Melly5", "img_src" : "IMG/Memo/img5.png"},
-//{"name" : "Melly6", "img_src" : "IMG/Memo/img6.png"},
-// {"name" : "Melly7", "img_src" : "IMG/Memo/img7.png"},
-// {"name" : "Melly8", "img_src" : "IMG/Memo/img8.png"},
-   
-	
+		{"name" : "Melly1", "img_src" : "IMG/Memo/img1.png"},
+		{"name" : "Melly2", "img_src" : "IMG/Memo/img2.png"},
+		{"name" : "Melly3", "img_src" : "IMG/Memo/img3.png"},
+		{"name" : "Melly4", "img_src" : "IMG/Memo/img4.png"},
+		{"name" : "Melly5", "img_src" : "IMG/Memo/img5.png"},
+		{"name" : "Melly6", "img_src" : "IMG/Memo/img6.png"},
+		{"name" : "Melly7", "img_src" : "IMG/Memo/img7.png"},
+		{"name" : "Melly8", "img_src" : "IMG/Memo/img8.png"},
 ];
-
 let count = 0;
 let firstCardGuess = "";
 let secondCardGuess = "";
 let cardBoard = document.getElementById('card-board');
 let grid = document.createElement('div');
-grid.setAttribute('class', 'grid');
-cardBoard.appendChild(grid);
 let cardGrid = cardsList.concat(cardsList);
 let shuffledCards = shuffleArray(cardGrid);
 let moveCount = 0; // Initialisierung des Zugzählers
@@ -50,6 +45,8 @@ let gameStarted = false; // Variable to track if the game has started
 let timerInterval; // Variable für das Intervall
 let timer = 0; // Variable für die Sekundenzählung
 
+grid.setAttribute('class', 'grid');
+cardBoard.appendChild(grid);
 // Rufen Sie die Funktion auf, wenn das Fenster geladen wird
 window.onload = loadAndDisplayResults;
 
@@ -121,7 +118,7 @@ function showCardBoard(){
         grid.appendChild(card);
     })
 }
-	function showAllCards() {
+function showAllCards() {
       let cards = document.querySelectorAll('.card');
       cards.forEach(card => {
         card.classList.add('selected');
@@ -174,7 +171,6 @@ function submitAndGoBack() {
     // Navigieren zur Index-Seite (oder schließen des Fensters)
     window.location.href = 'index.html'; // Ersetzen Sie 'index.html' mit dem Pfad zu Ihrer Hauptseite
 }
-
 function saveGameData() {
   let moves = document.getElementById('move-count').textContent;
   let time = document.getElementById('timer').textContent;
@@ -182,6 +178,11 @@ function saveGameData() {
   localStorage.setItem('memoryGameTime', time);
 }
 
+// Rufen Sie startTimer auf, wenn das Spiel gestartet wird:
+document.getElementById("restart-button").addEventListener("click", function() {
+    restartGame();
+    startTimer(); // Starten des Timers beim Neustart des Spiels
+});
 // Rufen Sie saveGameData() auf, wenn das Spiel beendet ist oder wenn der Benutzer auf "Absenden und zurück" klickt.
 document.getElementById('absenden').addEventListener('click', function(){
     	  saveGameData();
@@ -228,9 +229,4 @@ grid.addEventListener('click', function(e){
     }
 });
 
-// Rufen Sie startTimer auf, wenn das Spiel gestartet wird:
-document.getElementById("restart-button").addEventListener("click", function() {
-    restartGame();
-    startTimer(); // Starten des Timers beim Neustart des Spiels
-});
 
