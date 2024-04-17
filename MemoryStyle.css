@@ -57,7 +57,7 @@ Cursor-Eigenschaft und Hintergrundfarbe.*/
     cursor: pointer;
     position: relative;
     background-color: #00008b;
-	background-image: url( 'IMG/Handschellen.jpg');
+	
 }
 
 /* Ändert die Hintergrundfarbe der Karte beim Überfahren mit der Maus.*/

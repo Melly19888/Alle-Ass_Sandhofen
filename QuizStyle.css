@@ -1,3 +1,23 @@
+.custom-popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.custom-popup-content {
+  background-color: #14afe3;
+  padding: 20px;
+  border-radius: 5px;
+  font-size:25px;
+  color:#086309;
+}
 h1{
 	 border: 14px solid;
 	 border-style:inset ;

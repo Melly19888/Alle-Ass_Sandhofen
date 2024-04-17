@@ -197,20 +197,8 @@ if (ridAnswer && ridAnswer === 'I') {
 
 document.getElementById("Button").addEventListener("click", function() {
     checkAnswers();
-	
+	endQuiz()
 });
-// Funktion zum Anzeigen eines Alert-Popup-Fensters mit den erreichten Punkten und der verstrichenen Zeit
-function showAlertWithPointsAndTime(points, timeElapsed) {
-    // Berechne Minuten und Sekunden aus der verstrichenen Zeit
-    const minutes = Math.floor(timeElapsed / 60000);
-    const seconds = ((timeElapsed % 60000) / 1000).toFixed(0);
-
-    // Erstelle eine Nachricht mit Punkten und Zeit
-    const message = `Du hast ${points} Punkt(e) erreicht! Zeit: ${minutes} Minute(n) und ${seconds} Sekunde(n).`;
-
-    // Zeige das Alert-Fenster mit der Nachricht an
-    alert(message);
-}
 // Angenommen, 'points' und 'time' sind Ihre Variablen für Punkte und Zeit
 localStorage.setItem('quizPoints', points);
 localStorage.setItem('quizTime', timeElapsed);
@@ -242,6 +230,16 @@ function displaySavedTime() {
 document.addEventListener('DOMContentLoaded', function() {
     displaySavedTime();
 });
+function endQuiz() {
+    // Berechne die verstrichene Zeit seit dem Start des Quiz
+    const timeElapsed = Date.now() - startTime;
+    const minutes = Math.floor(timeElapsed / 60000);
+    const seconds = ((timeElapsed % 60000) / 1000).toFixed(0);
+
+    // Speichere Punkte und verstrichene Zeit in localStorage
+    localStorage.setItem('quizPoints', points.toString());
+    localStorage.setItem('quizTime', `${minutes}:${seconds.padStart(2, '0')}`);
+}
 function updateTableWithTimeAndPoints(points) {
     // Hole die gespeicherte Zeit aus dem localStorage
     const savedTime = localStorage.getItem('quizTime');
@@ -257,4 +255,25 @@ function updateTableWithTimeAndPoints(points) {
         
     }
 }
+function showAlertWithPointsAndTime(points, timeElapsed) {
+    // Berechne Minuten und Sekunden aus der verstrichenen Zeit
+    const minutes = Math.floor(timeElapsed / 60000);
+    const seconds = ((timeElapsed % 60000) / 1000).toFixed(0);
 
+    // Erstelle eine Nachricht mit Punkten und Zeit
+    const message = `Du hast ${points} Punkt(e) erreicht! Zeit: ${minutes} Minute(n) und ${seconds} Sekunde(n).`;
+
+    // Zeige das benutzerdefinierte Popup-Fenster mit der Nachricht an
+    document.getElementById('popupMessage').textContent = message;
+    document.getElementById('customPopup').style.display = 'flex';
+}
+
+document.getElementById('okButton').addEventListener('click', function() {
+    document.getElementById('customPopup').style.display = 'none'; // Verstecke das Popup
+    alert("Danke für die Teilnahme am Quiz! Bitte schließe nun dieses Fenster.");
+});
+
+document.getElementById("Button").addEventListener("click", function() {
+    checkAnswers(); // Überprüfe die Antworten und aktualisiere 'points'
+    endQuiz(); // Speichere Punkte und Zeit im localStorage
+});

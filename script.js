@@ -26,20 +26,15 @@ let tableData = [];
     }
 function loadAndDisplayResults() {
     // Abrufen der Daten aus dem Local Storage für das Memory-Spiel
-    let memoryGamePoints = localStorage.getItem('memoryGameMoves') || '0';
+    let memoryGamePoints = localStorage.getItem('memoryGamePoints') || '0';
     let memoryGameTime = localStorage.getItem('memoryGameTime') || '00:00';
 
     // Abrufen der Daten aus dem Local Storage für das Quiz
     let quizPoints = localStorage.getItem('quizPoints') || '0';
     let quizTime = localStorage.getItem('quizTime') || '00:00';
 
-    // Spielername abrufen; stellen Sie sicher, dass dieser Schritt vorher validiert wurde
+    // Holen des Spielernamens aus dem Local Storage
     let playerName = localStorage.getItem('playerName');
-
-    if (!playerName) {
-        console.error("Spielername fehlt im Local Storage.");
-        return; // Beenden Sie die Funktion frühzeitig, wenn kein Spielername vorhanden ist
-    }
 
     // Berechnen der kombinierten Zeit
     let combinedTime = formatCombinedTime(memoryGameTime, quizTime);
@@ -63,14 +58,15 @@ function loadAndDisplayResults() {
         tableBody.appendChild(newRow);
 
         // Optional: Löschen Sie die gespeicherten Werte, wenn sie nicht mehr benötigt werden.
-        localStorage.removeItem('memoryGameMoves');
+        localStorage.removeItem('memoryGamePoints');
         localStorage.removeItem('memoryGameTime');
         localStorage.removeItem('quizPoints');
         localStorage.removeItem('quizTime');
         localStorage.removeItem('playerName');
     }
-}
 
+	console.log("funktio loadAndDisplayResults" , memoryGameTime);
+}
 // Diese Funktion wird alle 3 Sekunden aufgerufen, um die Tabelle zu aktualisieren
 function updateTablePeriodically() {
     // Hier rufen Sie Ihre Logik zum Laden und Anzeigen der Ergebnisse auf
@@ -156,12 +152,14 @@ function saveTableData() {
 
     for (let i = 1; i < rows.length; i++) { // Start bei 1, um Überschriften zu überspringen
         const cells = rows[i].cells;
-        let rowData = {
-            name: cells[0].textContent,
-            points: cells[1].textContent,
-            time: cells[2].textContent
-        };
-        tableData.push(rowData);
+        if (cells.length >= 3) { // Stellen Sie sicher, dass es mindestens drei Zellen gibt
+            let rowData = {
+                name: cells[0].textContent,
+                points: cells[1].textContent,
+                time: cells[2].textContent // Stellen Sie sicher, dass diese Zelle existiert
+            };
+            tableData.push(rowData);
+        }
     }
 
     localStorage.setItem('tableData', JSON.stringify(tableData));
@@ -194,7 +192,7 @@ function restoreTableData() {
 }
 // Funktion zum Aktualisieren der Tabelle alle 3 Sekunden
 function startTableUpdateInterval() {
-    setInterval(updatePlayerData, 3000); // Aktualisiere alle 3000ms (3 Sekunden)
+    setInterval(updatePlayerData, 10000); // Aktualisiere alle 3000ms (3 Sekunden)
 	 updatePlayerData(); // Initialer Aufruf, um die Daten sofort beim Laden anzuzeigen
 	 }
 function updatePlayerData() {
@@ -320,10 +318,53 @@ function loadGameData() {
     pointsCell.textContent = moves;
     timeCell.textContent = time;
 
-    // Optional: Löschen Sie die Werte aus dem Local Storage, wenn sie nicht mehr benötigt werden.
-    localStorage.removeItem('memoryGameMoves');
-    localStorage.removeItem('memoryGameTime');
+
   }
+}
+function displayCombinedResults() {
+    let memoryGamePoints = parseInt(localStorage.getItem('memoryGamePoints') || '0');
+    let quizPoints = parseInt(localStorage.getItem('quizPoints') || '0');
+
+    let combinedPoints = memoryGamePoints + quizPoints;
+
+    // Hier können Sie entscheiden, wo Sie die kombinierten Ergebnisse anzeigen möchten.
+    // Zum Beispiel:
+    const combinedResultsElement = document.getElementById('combinedResults'); // Stellen Sie sicher, dass ein Element mit dieser ID existiert
+    if (combinedResultsElement) {
+        combinedResultsElement.textContent = `Gesamtpunkte: ${combinedPoints}`;
+    }
+
+    // Aktualisieren oder Erstellen einer Zeile in der Tabelle mit den kombinierten Ergebnissen
+    updateOrCreatePlayerRow(combinedPoints);
+}
+
+function updateOrCreatePlayerRow(points) {
+    const playerName = localStorage.getItem('playerName');
+
+    if (!playerName) {
+        console.error("Spielername fehlt im Local Storage.");
+        return;
+    }
+
+    const tableBody = document.getElementById('spielerTabelle').querySelector('tbody');
+
+    let existingRow = [...tableBody.rows].find(row => row.cells[0].textContent === playerName);
+
+    if (existingRow) {
+        existingRow.cells[1].textContent = points; // Aktualisieren der Punkte
+    } else {
+        let newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td>${playerName}</td>
+            <td>${points}</td>
+            <td></td> 
+        `;
+        tableBody.appendChild(newRow);
+
+        localStorage.removeItem('memoryGamePoints'); // Löschen Sie den Punktewert aus dem Local Storage
+        localStorage.removeItem('quizPoints'); // Löschen Sie den Punktewert aus dem Local Storage
+        localStorage.removeItem('playerName');
+    }
 }
 // Funktion zum Aktualisieren der Tabelle alle 5 Sekunden
 SpielStarten.addEventListener('click', function(event) {
@@ -368,7 +409,7 @@ SpielStarten.addEventListener('click', function(event) {
 });
 // Aufruf der Funktion beim Laden der Seite
 window.addEventListener('load', function() {
-	setInterval(updateTablePeriodically, 3000);
+	setInterval(updateTablePeriodically, 10000);
      // Initialer Aufruf, um die Daten sofort beim Laden anzuzeigen
     startTableUpdateInterval(); // Starte das regelmäßige Aktualisierungsintervall	
 	insertPlayerData();
@@ -406,7 +447,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	  insertPlayerData();
 	  startTableUpdateInterval();
 	  updatePlayerData();
-	  updateTableWithQuizResults()
+	  updateTableWithQuizResults();
+	   displayCombinedResults();
 });
 document.getElementById("Datenlöschen").addEventListener("click", function() {
 EMail();
