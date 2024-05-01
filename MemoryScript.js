@@ -3,13 +3,13 @@ document.getElementById("absenden").style.display = "none";
 // Karten Bilder info
 let cardsList = [
     {"name" : "Melly1", "img_src" : "IMG/Memo/img1.png"},
-    {"name" : "Melly2", "img_src" : "IMG/Memo/img2.png"},
+   /*{"name" : "Melly2", "img_src" : "IMG/Memo/img2.png"},
 	{"name" : "Melly3", "img_src" : "IMG/Memo/img3.png"},
 	{"name" : "Melly4", "img_src" : "IMG/Memo/img4.png"},
 	{"name" : "Melly5", "img_src" : "IMG/Memo/img5.png"},
 	{"name" : "Melly6", "img_src" : "IMG/Memo/img6.png"},
 	{"name" : "Melly7", "img_src" : "IMG/Memo/img7.png"},
-	{"name" : "Melly8", "img_src" : "IMG/Memo/img8.png"},
+	{"name" : "Melly8", "img_src" : "IMG/Memo/img8.png"},*/
 ];
 
 let count = 0;
@@ -186,8 +186,11 @@ document.getElementById("restart-button").addEventListener("click", function() {
 // Rufen Sie saveGameData() auf, wenn das Spiel beendet ist oder wenn der Benutzer auf "Absenden und zurück" klickt.
 document.getElementById('absenden').addEventListener('click', function(){
 	saveGameData();
-	endQuiz();
-	(savedTime);
+	 let points = localStorage.getItem('memoryGamePoints'); // Holen Sie sich die gespeicherten Punkte zurück
+    if (points) {
+        endQuiz(points);
+    }
+	
 	
       window.close();
 document.getElementById("absenden").style.display = "none";
@@ -260,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });	
 
 
-function endQuiz() {
+function endQuiz(points) {
     // Berechne die verstrichene Zeit seit dem Start des Quiz
     const timeElapsed = Date.now() - startTime;
     const minutes = Math.floor(timeElapsed / 60000);

@@ -192,7 +192,7 @@ function restoreTableData() {
 }
 // Funktion zum Aktualisieren der Tabelle alle 3 Sekunden
 function startTableUpdateInterval() {
-    setInterval(updatePlayerData, 10000); // Aktualisiere alle 3000ms (3 Sekunden)
+    setInterval(updatePlayerData, 3000); // Aktualisiere alle 3000ms (3 Sekunden)
 	 updatePlayerData(); // Initialer Aufruf, um die Daten sofort beim Laden anzuzeigen
 	 }
 function updatePlayerData() {
@@ -381,7 +381,7 @@ SpielStarten.addEventListener('click', function(event) {
 		document.getElementById("AllgemeineQuiz").style.display = "block";
         document.getElementById("StädteQuiz").style.display = "block";
         document.getElementById("Memory").style.display = "block";
-		document.getElementById("Neu").style.display = "block";
+		document.getElementById("Neu").style.display = "none";
 	
 	
 		
@@ -407,12 +407,27 @@ SpielStarten.addEventListener('click', function(event) {
        showCustomPopup("Bitte geben deinen Namen ein.");
    }
 });
+
+// Funktion zum Zurücksetzen des Spiels
+function resetGame() {
+   localStorage.removeItem('memoryGameMoves');
+  localStorage.removeItem('memoryGameTime');
+  localStorage.removeItem('quizPoints');
+  localStorage.removeItem('quizTime');
+  localStorage.removeItem('playerName'); // Spielername entfernen, damit ein neuer eingegeben werden kann
+
+  // Zurücksetzen des Eingabefelds für den Spielernamen
+  const player1NameInput = document.getElementById("player1Name");
+  player1NameInput.value = '';
+  player1NameInput.readOnly = false;
+
+}
+
+
 // Aufruf der Funktion beim Laden der Seite
 window.addEventListener('load', function() {
-	setInterval(updateTablePeriodically, 10000);
-     // Initialer Aufruf, um die Daten sofort beim Laden anzuzeigen
-    startTableUpdateInterval(); // Starte das regelmäßige Aktualisierungsintervall	
-	insertPlayerData();
+     setInterval(updateTablePeriodically, 60000);
+		  resetGame();
 });
 // Optional: Event-Listener für das Speichern der Daten vor dem Verlassen der Seite
 window.addEventListener('beforeunload', function() {
@@ -496,7 +511,4 @@ document.getElementById("Absenden").addEventListener("click", function() {
 	document.getElementById("Absenden").style.display = "none";
 	document.getElementById("Neu").style.display = "block";
 		
-});
-document.getElementById("Neu").addEventListener("click", function() {
-location.reload();
 });
