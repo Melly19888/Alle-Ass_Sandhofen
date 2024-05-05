@@ -4,19 +4,109 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skat Spiel</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="QuizStyle.css">
 
 </head>
 	<body class="grid-container">
 		<header class="item1">
 		<figure>
-		
+			<h1 id="h1"> Das Städte Quiz</h1>
 		</figure>
-				
-		</header>
-		<main class="item3">
 		
-			  <a href="index.html"><button id="StädteQuiz"><b>Zurück zur Startseite</b></button></a>
+			<h2 id="timer">Zeit: 0 Sekunden</h2>				
+		</header>
+		<main>
+		<div id="customPopup" class="custom-popup-container" style="display:none;">
+		  <div class="custom-popup-content">
+			<p id="popupMessage">Hier steht die Nachricht.</p>
+			<button id="okButton">OK</button>
+		  </div>
+		</div>
+		<div>
+			<h5>1.An welchem Fluss liegt Heidelberg?</h5>
+
+				<form id="nutellaForm">
+				  <input type="radio" id="Rhein" name="FlußQuestion" value="A">
+				  <label for="Rhein">A) Rhein</label><br>
+
+				  <input type="radio" id="Neckar" name="FlußQuestion" value="B">
+				  <label for="Neckar">B) Neckar</label><br>
+
+				  <input type="radio" id="Mosel" name="FlußQuestion" value="C">
+				  <label for="Mosel">C) Mosel</label><br>
+				<!-- <p>Die Antwort auf die Frage (A Rhein )</p> -->
+				  
+				</form>
+			<h5>2. Wie viele Stadtteile hat Heidelberg?</h5>
+
+				<form id="StadtteilForm">
+				  <input type="radio" id="17" name="17" value="A">
+				  <label for="17">A) 17</label><br>
+
+				  <input type="radio" id="12" name="12" value="B">
+				  <label for="17">B)12</label><br>
+
+				  <input type="radio" id="15" name="15" value="C">
+				  <label for="15">C) 15</label><br>
+
+				  <input type="radio" id="1l" name="11" value="D">
+				  <label for="11">D) 11</label><br>
+				  
+		<!-- <p>Die Antwort auf die Frage (c) 15) </p> -->
+				</form>
+				
+				<h5>3. Welcher Stadtteil war das ehemalige Winzerdorf ?</h5>
+
+				<form id="StadtteilForm">
+				  <input type="radio" id="Handschuhheim" name="Handschuhheim" value="A">
+				  <label for="Handschuhheim">A) Handschuhheim</label><br>
+
+				  <input type="radio" id="Rohrbach" name="Rohrbach" value="B">
+				  <label for="Rohrbach">B)Rohrbach</label><br>
+
+				  <input type="radio" id="Bergheim" name="Bergheim" value="C">
+				  <label for="Bergheim">C) Bergheim</label><br>
+
+				  <input type="radio" id="Bahnstadt" name="Bahnstadt" value="D">
+				  <label for="Bahnstadt">D) Bahnstadt</label><br>
+				  
+		<!-- <p>Die Antwort auf die Frage (B) Rohrbach) </p> -->
+				</form>
+				<h5>4. Wo findet ihr den Märchenwald in Heidelberg ?</h5>
+
+				<form id="StadtteilForm">
+				  <input type="radio" id="Auf dem Königsstuhl" name="Auf dem Königsstuhl" value="A">
+				  <label for="Auf dem Königsstuhl">A) Auf dem Königsstuhl</label><br>
+
+				  <input type="radio" id="An der Neckarwiese" name="An der Neckarwiese" value="B">
+				  <label for="An der Neckarwiese">B)v</label><br>
+
+				  <input type="radio" id="In der Altstadt" name="In der Altstadt" value="C">
+				  <label for="In der Altstadt">C) In der Altstadt</label><br>
+
+				  <input type="radio" id="auf dem Boxberg" name="auf dem Boxberg" value="D">
+				  <label for="auf dem Boxberg">D) auf dem Boxberg</label><br>
+				  
+		<!-- <p>Die Antwort auf die Frage (A) Auf dem Königsstuhl) </p> -->
+				</form>
+				<h5>5. Wo findet ihr den Märchenwald in Heidelberg ?</h5>
+
+				<form id="StadtteilForm">
+				  <input type="radio" id="Auf dem Königsstuhl" name="Auf dem Königsstuhl" value="A">
+				  <label for="Auf dem Königsstuhl">A) Auf dem Königsstuhl</label><br>
+
+				  <input type="radio" id="An der Neckarwiese" name="An der Neckarwiese" value="B">
+				  <label for="An der Neckarwiese">B)v</label><br>
+
+				  <input type="radio" id="In der Altstadt" name="In der Altstadt" value="C">
+				  <label for="In der Altstadt">C) In der Altstadt</label><br>
+
+				  <input type="radio" id="auf dem Boxberg" name="auf dem Boxberg" value="D">
+				  <label for="auf dem Boxberg">D) auf dem Boxberg</label><br>
+				  
+		<!-- <p>Die Antwort auf die Frage (A) Auf dem Königsstuhl) </p> -->
+				</form>
+		  <a href="index.html"><button id="StädteQuiz"><b>Zurück zur Startseite</b></button></a>
 		<br>
 			
 		</main>
