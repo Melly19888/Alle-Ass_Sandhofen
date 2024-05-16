@@ -152,5 +152,5 @@ function showAlertWithPointsAndTime(points, timeElapsed) {
 document.getElementById("Button").addEventListener("click", function() {
     checkAnswers(); // Überprüfe die Antworten und aktualisiere 'points'
     endQuiz(); // Speichere Punkte und Zeit im localStorage
-	// window.close();
+	 window.close();
 });
