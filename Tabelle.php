@@ -3,7 +3,7 @@
 header('Content-Type: application/json');
 
 // Pfad zur JSON-Datei
-$jsonFile = __DIR__ . '/IMG/Spieldaten/spieldaten.json';
+$jsonFile = __DIR__ . '/IMG/Spieldaten/spieldate.json';
 
 // Daten aus POST-Request lesen (hier als JSON)
 $tableDataJson = file_get_contents('php://input');
@@ -16,7 +16,7 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 }
 
 if (!empty($tableData)) {
-    // Überprüfen, ob die Datei existiert und lesbar ist
+    
     if (file_exists($jsonFile)) {
         $existingData = json_decode(file_get_contents($jsonFile), true);
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -27,7 +27,7 @@ if (!empty($tableData)) {
         $existingData = [];
     }
 
-    // Fügen Sie die neuen Daten hinzu
+    
     $existingData = array_merge($existingData, $tableData);
 
     // Speichern der kombinierten Daten in der JSON-Datei

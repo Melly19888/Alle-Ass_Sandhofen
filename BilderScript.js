@@ -1,7 +1,7 @@
 let startTime;
 let interval;
-let points =0;
-let timeElapsed; 
+let points = 0;
+let timeElapsed;
 let currentQuestionIndex = 0;
 let score = 0;
 
@@ -198,10 +198,10 @@ function startQuiz() {
 
 function updateTimer() {
    const timerElement = document.getElementById('timer');
-   const timeElapsed = Date.now() - startTime;
-   const seconds = Math.floor(timeElapsed / 1000);
+   const timeElapsedMs = Date.now() - startTime;
+   const secondsElapsed = Math.floor(timeElapsedMs / 1000);
 
-   timerElement.textContent = `Zeit: ${seconds} Sekunden`;
+   timerElement.textContent = `Zeit: ${formatTime(secondsElapsed)}`;
 
    if (currentQuestionIndex < quizData.length) {
        requestAnimationFrame(updateTimer);
@@ -211,12 +211,20 @@ function updateTimer() {
 function endQuiz() {
    clearInterval(interval);
 
-   const timeElapsed = Date.now() - startTime;
+   const timeElapsedMs = Date.now() - startTime;
+   const secondsElapsed = Math.floor(timeElapsedMs / 1000);
 
    localStorage.setItem('quizPoints', score.toString());
-   localStorage.setItem('quizTime', timeElapsed.toString());
+   localStorage.setItem('quizTime', formatTime(secondsElapsed));
 
    window.close(); // Optional, um das Fenster zu schließen oder weiterzuleiten
+}
+
+// Hilfsfunktion zum Formatieren der Zeit als "MM:SS"
+function formatTime(totalSeconds) {
+   const minutes = Math.floor(totalSeconds / 60);
+   const seconds = totalSeconds % 60;
+   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
 // Event listener for the start button

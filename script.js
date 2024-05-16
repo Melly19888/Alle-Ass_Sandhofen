@@ -24,25 +24,19 @@ let tableData = [];
         }
         tableData.push(rowData.join(' | '));
     }
+// Funktion zum Laden und Anzeigen der Ergebnisse
 function loadAndDisplayResults() {
-    // Abrufen der Daten aus dem Local Storage für das Memory-Spiel
-    let memoryGamePoints = localStorage.getItem('memoryGamePoints') || '0';
+    let memoryGamePoints = localStorage.getItem('memoryGamePoints') || '';
     let memoryGameTime = localStorage.getItem('memoryGameTime') || '00:00';
-
-    // Abrufen der Daten aus dem Local Storage für das Quiz
-    let quizPoints = localStorage.getItem('quizPoints') || '0';
+    let quizPoints = localStorage.getItem('quizPoints') || '';
     let quizTime = localStorage.getItem('quizTime') || '00:00';
-
-    // Holen des Spielernamens aus dem Local Storage
     let playerName = localStorage.getItem('playerName');
 
-    // Berechnen der kombinierten Zeit
+    if (!playerName) return; // Wenn kein Spielername vorhanden ist, beenden
+
     let combinedTime = formatCombinedTime(memoryGameTime, quizTime);
 
-    // Erstellen einer neuen Zeile für die Tabelle oder Aktualisieren einer bestehenden Zeile
     const tableBody = document.getElementById('spielerTabelle').querySelector('tbody');
-
-    // Prüfen Sie, ob eine Zeile mit diesem Spielernamen bereits existiert
     let existingRow = [...tableBody.rows].find(row => row.cells[0].textContent === playerName);
 
     if (existingRow) {
@@ -57,16 +51,14 @@ function loadAndDisplayResults() {
         `;
         tableBody.appendChild(newRow);
 
-        // Optional: Löschen Sie die gespeicherten Werte, wenn sie nicht mehr benötigt werden.
         localStorage.removeItem('memoryGamePoints');
         localStorage.removeItem('memoryGameTime');
         localStorage.removeItem('quizPoints');
         localStorage.removeItem('quizTime');
         localStorage.removeItem('playerName');
     }
-
-	console.log("funktio loadAndDisplayResults" , memoryGameTime);
 }
+
 // Diese Funktion wird alle 3 Sekunden aufgerufen, um die Tabelle zu aktualisieren
 function updateTablePeriodically() {
     // Hier rufen Sie Ihre Logik zum Laden und Anzeigen der Ergebnisse auf
@@ -93,28 +85,51 @@ function convertSecondsToTimeString(seconds) {
 
     return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
-function EMail(){
-	 const tableDataString = localStorage.getItem('tableData');
-
+function EMail() {
+    const tableDataString = localStorage.getItem('tableData');
     if (tableDataString) {
         fetch('send.php', { // Pfad zu Ihrem PHP-Skript
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: 'tableData=' + encodeURIComponent(tableDataString)
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
-            if (data.success) {
+            if (data && data.success) {
                 console.log('Email sent successfully');
+                // Senden der Daten an save_to_file.php
+                return fetch('save_to_file.php', { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: tableDataString // Hier wird das gespeicherte tableData verwendet
+                });
             } else {
-                console.error('Error sending email');
+                throw new Error(data.error || 'Error sending email');
             }
         })
-        .catch((error) => {
-            console.error('Error:', error);
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.success) {
+                console.log('Daten erfolgreich in Datei gespeichert');
+            } else {
+                throw new Error(data.error || 'Fehler beim Speichern der Daten in Datei');
+            }
+        })
+        .catch((error) => { 
+            console.error('Fehler:', error); 
         });
+    } else {
+        console.error("Keine Tabellen-Daten im Local Storage gefunden.");
     }
 }
 function clearTableData() {
@@ -145,23 +160,24 @@ function addPlayerToTable(playerName) {
 
     saveTableData(); // Speichern Sie die aktualisierte Tabelle
 }
+// Funktion zum Speichern der Tabelle
 function saveTableData() {
     const table = document.getElementById('spielerTabelle');
     const rows = table.rows;
     let tableData = [];
-
     for (let i = 1; i < rows.length; i++) { // Start bei 1, um Überschriften zu überspringen
         const cells = rows[i].cells;
         if (cells.length >= 3) { // Stellen Sie sicher, dass es mindestens drei Zellen gibt
             let rowData = {
                 name: cells[0].textContent,
-                points: cells[1].textContent,
+                points: cells[1].textContent !== '0' ? cells[1].textContent : '', // Verhindern des Speicherns von "0"
                 time: cells[2].textContent // Stellen Sie sicher, dass diese Zelle existiert
             };
-            tableData.push(rowData);
+            if (rowData.name) { // Überprüfen, ob der Name vorhanden ist
+                tableData.push(rowData);
+            }
         }
     }
-
     localStorage.setItem('tableData', JSON.stringify(tableData));
 }
 function restoreTableData() {
@@ -226,41 +242,46 @@ function updatePlayerData() {
     }
 }
 function updateTableWithQuizResults() {
-  const playerName = localStorage.getItem('playerName');
-  const quizPoints = localStorage.getItem('quizPoints');
-  const quizTime = localStorage.getItem('quizTime');
+     const playerName = localStorage.getItem('playerName');
+     const quizPointsStr = localStorage.getItem('quizPoints');
+     const quizTimeStr= localStorage.getItem('quizTime');
 
-  if (playerName && quizPoints && quizTime) {
-    const tableBody = document.querySelector("#spielerTabelle tbody");
-    for (let row of tableBody.rows) {
-      if (row.cells[0].textContent === playerName) {
-        // Addiere Punkte und Zeit zu den bestehenden Werten
-        let currentPoints = parseInt(row.cells[1].textContent);
-        let currentTime = row.cells[2].textContent; // Format: 'MM:SS'
+     if (playerName && quizPointsStr && quizTimeStr) {
+         const quizPoints= parseInt(quizPointsStr);
+         const quizSeconds= parseInt(quizTimeStr);
 
-        // Konvertiere beide Zeiten in Sekunden für einfache Addition
-        let totalSecondsCurrent = convertTimeToSeconds(currentTime);
-        let totalSecondsNew = convertTimeToSeconds(quizTime);
+         if (!isNaN(quizPoints) && !isNaN(quizSeconds)) {
+             const tableBody= document.querySelector("#spielerTabelle tbody");
 
-        // Aktualisiere Punkte und Zeit
-        row.cells[1].textContent = currentPoints + parseInt(quizPoints);
-        row.cells[2].textContent = convertSecondsToTime(totalSecondsCurrent + totalSecondsNew);
+             for (let row of tableBody.rows) {
+                 if (row.cells[0].textContent=== playerName) {
 
-        break;
-      }
-    }
-  }
+                     let currentPoints= parseInt(row.cells[1].textContent);
+                     let currentSeconds= convertToSeconds(row.cells[2].textContent);
+
+                     row.cells[1].textContent= currentPoints+ quizPoints;
+                     row.cells[2].textContent= convertToMMSS(currentSeconds+ quizSeconds);
+
+                     break;
+                 }
+             }
+         } 
+	 }
 }
-// Hilfsfunktionen zur Zeitumrechnung
-function convertTimeToSeconds(time) {
-  const [minutes, seconds] = time.split(':').map(Number);
-  return minutes * 60 + seconds;
+
+// Hilfsfunktion zur Konvertierung von MM:SS zu Sekunden
+function convertToSeconds(time){
+      let [minutes, seconds]= time.split(':').map(Number);
+      return minutes*60+ seconds;
 }
-function convertSecondsToTime(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+
+// Hilfsfunktion zur Konvertierung von Sekunden zu MM:SS
+function convertToMMSS(seconds){
+      let minutes= Math.floor(seconds/60);
+      let remainingSeconds= seconds%60;
+      return `${minutes}:${remainingSeconds.toString().padStart(2,'0')}`;
 }
+
 function checkAndShowSubmitButton() {
     if (clickedButtonsCount === totalButtonsToClick) {
         document.getElementById("Absenden").style.display = "block";
@@ -367,28 +388,24 @@ function updateOrCreatePlayerRow(points) {
     }
 }
 // Funktion zum Aktualisieren der Tabelle alle 5 Sekunden
+// Event-Listener für das Starten des Spiels
 SpielStarten.addEventListener('click', function(event) {
     const player1NameInput = document.getElementById("player1Name");
 
-    if (!rolesChosenFlag && (player1NameInput.value !== "" )) {
+    if (!rolesChosenFlag && player1NameInput.value.trim() !== "") {
         rolesChosenFlag = true;
-
         player1NameInput.readOnly = true;
-		 // Speichern Sie den Namen des Spielers in localStorage
-        localStorage.setItem('playerName', player1NameInput.value);
-		
-		document.getElementById("BilderRaetsel").style.display = "block";
-		document.getElementById("AllgemeineQuiz").style.display = "block";
+
+        localStorage.setItem('playerName', player1NameInput.value.trim());
+
+        document.getElementById("BilderRaetsel").style.display = "block";
+        document.getElementById("AllgemeineQuiz").style.display = "block";
         document.getElementById("StädteQuiz").style.display = "block";
         document.getElementById("Memory").style.display = "block";
-		document.getElementById("Neu").style.display = "none";
-	
-	
-		
+		document.getElementById("Datenlöschen").style.display = "none";
 
         SpielStarten.style.display = "none";
 
-        // Füge den Namen des Spielers in die Tabelle ein
         const tableBody = document.querySelector("#spielerTabelle tbody") || document.querySelector("#spielerTabelle");
 
         let newRow = tableBody.insertRow();
@@ -397,12 +414,11 @@ SpielStarten.addEventListener('click', function(event) {
         let pointsCell = newRow.insertCell(1);
         let timeCell = newRow.insertCell(2);
 
-        nameCell.textContent = player1NameInput.value;
+        nameCell.textContent = player1NameInput.value.trim();
 
-        // Setze Punkte und Zeit auf Standardwerte oder leere Strings
         pointsCell.textContent = '0';
         timeCell.textContent = '';
-		
+
     } else {
        showCustomPopup("Bitte geben deinen Namen ein.");
    }
@@ -426,7 +442,7 @@ function resetGame() {
 
 // Aufruf der Funktion beim Laden der Seite
 window.addEventListener('load', function() {
-     setInterval(updateTablePeriodically, 60000);
+     setInterval(updateTablePeriodically, 600);
 		  resetGame();
 });
 // Optional: Event-Listener für das Speichern der Daten vor dem Verlassen der Seite
@@ -469,46 +485,5 @@ document.getElementById("Datenlöschen").addEventListener("click", function() {
 EMail();
 });
 document.getElementById("Absenden").addEventListener("click", function() {
-    const table = document.getElementById('spielerTabelle');
-    const rows = table.rows;
-    let tableData = [];
-
-    for (let i = 0; i < rows.length; i++) { // Start bei 1, um Überschriften zu überspringen
-        const cells = rows[i].cells;
-        let rowData = {
-            name: cells[0].textContent,
-            points: cells[1].textContent,
-            time: cells[2].textContent
-        };
-        tableData.push(rowData);
-    }
-
-    fetch('send_email.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json' // Änderung zu application/json
-        },
-        body: JSON.stringify({tableData: tableData}) // Senden als JSON-Objekt
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            console.log('Daten erfolgreich gespeichert');
-            // Weitere Aktionen...
-        } else {
-            console.error('Fehler beim Speichern der Daten in Jsondatei:', data.error || 'Unbekannter Fehler');
-            // Fehlerbehandlung...
-        }
-    })
-    .catch((error) => {
-        console.error('Fehler:', error);
-    });
-	document.getElementById("Absenden").style.display = "none";
-	document.getElementById("Neu").style.display = "block";
-		
+  location.reload(); // Lädt die Seite neu
 });
