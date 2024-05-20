@@ -214,8 +214,8 @@ function endQuiz() {
    const timeElapsedMs = Date.now() - startTime;
    const secondsElapsed = Math.floor(timeElapsedMs / 1000);
 
-   localStorage.setItem('quizPoints', score.toString());
-   localStorage.setItem('quizTime', formatTime(secondsElapsed));
+   localStorage.setItem('BilderQuizPoints', score.toString());
+   localStorage.setItem('BilderTime', formatTime(secondsElapsed));
 
    window.close(); // Optional, um das Fenster zu schließen oder weiterzuleiten
 }

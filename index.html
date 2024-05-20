@@ -1,54 +1,48 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=1280px height=800px">
-<title>Ausflug</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-<link rel="stylesheet" href="style.css">
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280px height=800px">
+    <title>Ausflug</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
-	<body class="grid-container">
-		<header class="item1">
-		<button id="Datenlöschen">Tabelle senden</button>
-		 <button id="Datenreinigen" onclick="clearTableData()">löschen</button> 
-		<figure>
-			<h1> Willkommen bei unserem Ausflug 2024</h1>
-		</figure>
-				<h3> Wir wünschen euch viel Spaß beim Quizen, zu gewinnen gibt es für den oder die beste 150€.</p>
-				<h6>Die Vorstandschaft und Spielleiter dieses Spiel, wünschen euch viel vergnügen.</h6>
-					<p id="RegelHinweis"> Die Regeln findet ihr unter dem Button Regeln</p>
-					<button id="SpielStarten"><b>Spielstarten</b></button>
-					<button id="Absenden"><b>Spiel beenden</b></button>
-					<button id="Neu"><b>Spiel neu Laden</b></button>
-		
-		</header>
-		<main class="item3">
-			<div id="Button">
-			  <a href="StaedteQuiz.html"target="_blank"><button id="StädteQuiz"><b>Städte Quiz Mannheim</b></button></a>
-		<br>
-			<a href="SkatMemory.html"target="_blank"><button id="Memory"><b>Skat Memory</b></button></a>
-		<br>
-		<a href="BilderRaetsel.html"target="_blank"><button id="BilderRaetsel"><b>Bilder Rätsel</b></button></a>
-		<br>
-		<a href="AllgemeineQuiz.html"target="_blank"><button id="AllgemeineQuiz"><b>Allgemeine Quiz</b></button></a>
-		<br>
-		</div>
-		</main>
-	<footer>
-	
-	
-		<div class="playerNames">
-    <input type="text" class="playerName" id="player1Name" placeholder="Spieler 1">
-	  <a href="regeln.html" target="_blank"><button   id="regeln"><b>Spielregeln</b></button></a>
-	  
-	  <a href="impressum.html" target="_blank"><button id="impressum" ><b>Impressum</b></button></a>
-		 <!-- Tabelle für Spielerinformationen -->
-   <!-- Tabelle für Spielerinformationen -->
-   </footer>
-<nav class="item2">
+<body class="grid-container">
+<header class="item1">
+    <button id="Datenlöschen">Tabelle senden</button>
+    <button id="Datenreinigen" onclick="clearTableData()">löschen</button>
+    <figure>
+        <h1>Willkommen bei unserem Ausflug 2024</h1>
+    </figure>
+    <h3>Wir wünschen euch viel Spaß beim Quizen, zu gewinnen gibt es für den oder die beste 150€.</h3>
+    <h6>Die Vorstandschaft und Spielleiter dieses Spiel, wünschen euch viel vergnügen.</h6>
+    <p id="RegelHinweis">Die Regeln findet ihr unter dem Button Regeln</p>
+    <button id="SpielStarten"><b>Spielstarten</b></button>
+    <button id="Absenden"><b>Spiel beenden</b></button>
+    <button id="Neu"><b>Spiel neu Laden</b></button>
+</header>
 
+<main class="item3">
+    <div id="Button">
+        <a href="StaedteQuiz.html" target="_blank"><button id="StädteQuiz"><b>Städte Quiz Mannheim</b></button></a><br>
+        <a href="SkatMemory.html" target="_blank"><button id="Memory"><b>Skat Memory</b></button></a><br>
+        <a href="BilderRaetsel.html" target="_blank"><button id="BilderRaetsel"><b>Bilder Rätsel</b></button></a><br>
+        <a href="AllgemeineQuiz.html" target="_blank"><button id="AllgemeineQuiz"><b>Allgemeine Quiz</b></button></a><br>
+    </div>
+</main>
+
+<footer>
+    <div class="playerNames">
+        <input type="text" class="playerName" id="player1Name" placeholder="Spieler 1">
+        <a href="regeln.html" target="_blank"><button id="regeln"><b>Spielregeln</b></button></a>
+        <a href="impressum.html" target="_blank"><button id="impressum"><b>Impressum</b></button></a>
+
+        <!-- Tabelle für Spielerinformationen -->
+        <!-- Tabelle für Spielerinformationen -->
+    </div>
+</footer>
+
+<nav class="item2">
     <table id="spielerTabelle">
         <thead>
             <tr>
@@ -57,20 +51,11 @@
                 <th>Zeit</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- Hier werden die Spielerinformationen eingefügt -->
-            <!-- Entfernen Sie die IDs von diesen Zellen -->
-            <tr id="spielerInfo">
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <!-- Weitere Zeilen für Spieler können hier dynamisch hinzugefügt werden -->
-        </tbody>
+        <tbody><!-- Hier werden die Spielerinformationen eingefügt --></tbody>
     </table>
 </nav>
 
-		<script src = "script.js"></script>
-		
-	</body>
+<script src = "script.js"></script>
+
+</body>
 </html>

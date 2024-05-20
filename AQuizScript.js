@@ -62,10 +62,10 @@ function checkAnswers(event) {
 
     const timeElapsed = Date.now() - startTime;
 
-    localStorage.setItem('quizPoints', points.toString());
+    localStorage.setItem('StaedteQuizPoint', points.toString());
 
    // Speichern der verstrichenen Zeit in Millisekunden
-   localStorage.setItem('quizTime', timeElapsed.toString());
+   localStorage.setItem('StaedteQuizTime', timeElapsed.toString());
 
    showAlertWithPointsAndTime(points, timeElapsed);
 }
@@ -75,7 +75,7 @@ function showAlertWithPointsAndTime(points, timeElapsed) {
    const seconds = ((timeElapsed % 60000) / 1000).toFixed(0);
 }
 function displaySavedTime() {
-   const savedTimeStr = localStorage.getItem('quizTime');
+   const savedTimeStr = localStorage.getItem('quizTimes');
 
    if (savedTimeStr) {
        const savedTimeMs = parseInt(savedTimeStr, 10);
