@@ -123,30 +123,79 @@ window.addEventListener('beforeunload', saveTableData);
 document.addEventListener('DOMContentLoaded', loadAndDisplayResults);
 
 function EMail() {
-   const tableDataString=localStorage.getItem('tableData');
+    const tableDataString = localStorage.getItem('tableData');
 
-   if (tableDataString) {
-       fetch('send.php',{method:'POST',
-           headers:{'Content-Type':'application/x-www-form-urlencoded'},
-           body:'tableData='+encodeURIComponent(tableDataString)})
-           .then(response=>{if(!response.ok){throw new Error('Network response was not ok');}return response.json();})
-           .then(data=>{
-               if(data&&data.success){
-                   console.log('Email sent successfully'); 
-                   return fetch('save_to_file.php',{method:'POST',
-                       headers:{'Content-Type':'application/json'},
-                       body:JSON.stringify(tableData)});
-               }else{throw new Error(data.error||'Error sending email');}})
-           .then(response=>{if(!response.ok){throw new Error('Network response was not ok');}return response.json();})
-           .then(data=>{
-               if(data&&data.success){
-                   console.log('Daten erfolgreich in Datei gespeichert');} 
-               else{throw new Error(data.error||'Fehler beim Speichern der Daten in Datei');}})
-           .catch((error)=>{console.error('Fehler:',error);});
+    if (tableDataString) {
+        fetch('send.php', { 
+            method: 'POST', 
+            headers: { 
+                'Content-Type': 'application/x-www-form-urlencoded' 
+            }, 
+            body: 'tableData=' + encodeURIComponent(tableDataString) 
+        })
+        .then(response => { 
+            if (!response.ok) { 
+                throw new Error('Netzwerkantwort war nicht ok'); 
+            } 
+            return response.json(); 
+        })
+        .then(data => { 
+            if (data && data.success) { 
+                console.log('E-Mail erfolgreich gesendet'); 
 
-   }else console.error("Keine Tabellen-Daten im Local Storage gefunden.");
+                return fetch('save_to_file.php', { 
+                    method: 'POST', 
+                    headers: { 
+                        'Content-Type': 'application/json' 
+                    }, 
+                    body: JSON.stringify(tableData) 
+                });
+
+            } else { 
+                throw new Error(data.error || 'Fehler beim Senden der E-Mail'); 
+            } 
+        })
+        .then(response => { 
+            if (!response.ok) { 
+                throw new Error('Netzwerkantwort war nicht ok'); 
+            } 
+
+            return response.json(); 
+
+        })
+        .then(data => { 
+            if (data && data.success) { 
+                console.log('Daten erfolgreich in Datei gespeichert'); 
+
+            } else { 
+
+                throw new Error(data.error || 'Fehler beim Speichern der Daten in Datei'); 
+
+            } 
+
+         })
+
+         .catch((error) => {
+
+             console.error('Fehler:', error); 
+
+             console.error('Antwortstatus:', error.response ? error.response.status : 'Kein Antwortstatus');
+
+             if (error.response) {
+
+                 error.response.text().then(text => console.error('Antworttext:', text));
+
+             }
+
+         });
+
+     } else {
+
+         console.error("Keine Tabellen-Daten im Local Storage gefunden.");
+
+     }
+
 }
-
 function clearTableData() {
    localStorage.removeItem('tableData');
 
@@ -184,7 +233,8 @@ function restoreTableData() {
    }
 }
 
-function startTableUpdateInterval() {setInterval(updatePlayerData,3000);updatePlayerData();}
+function startTableUpdateInterval() {
+	setInterval(updatePlayerData,3000);updatePlayerData();}
 
 function updatePlayerData() { 
     let moves=localStorage.getItem('memoryGameMoves'),
@@ -240,3 +290,8 @@ function saveTableData(){
     clickedButtonsCount++;
     checkAndShowSubmitButton();
 }); });
+
+document.getElementById("Datenlöschen").addEventListener("click", function() {
+  EMail();
+});
+

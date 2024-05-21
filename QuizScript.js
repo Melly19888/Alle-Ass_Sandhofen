@@ -181,7 +181,7 @@ function showCustomPopup(message) {
     document.body.appendChild(popup);
     popup.style.position='fixed';
     popup.style.backgroundColor='darkblue';
-    popup.style.color='oronge';
+    popup.style.color='white';
     popup.style.padding='20px';
     popup.style.borderRadius='25px';
     popup.style.zIndex='9999';

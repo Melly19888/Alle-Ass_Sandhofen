@@ -4,16 +4,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tableData = json_decode($input, true);
 
     if ($tableData) {
-        $filePath = 'spielergebnisse.txt'; // Pfad zur Datei, in der die Daten gespeichert werden sollen
+        $filePath = 'spielergebnisse.txt'; // Pfad zur Datei
 
-        // Überprüfen Sie, ob das Verzeichnis beschreibbar ist
+        // Überprüfen ob das Verzeichnis beschreibbar ist
         if (!is_writable(dirname($filePath))) {
             error_log("Das Verzeichnis ist nicht beschreibbar: " . dirname($filePath));
             echo json_encode(array('success' => false, 'error' => 'Das Verzeichnis ist nicht beschreibbar'));
             exit;
         }
 
-        // Erstellen Sie die Datei, falls sie nicht existiert
+        // Datei erstellen falls sie nicht existiert
         if (!file_exists($filePath)) {
             if (!touch($filePath)) {
                 error_log("Fehler beim Erstellen der Datei: " . $filePath);
@@ -22,13 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // Bereiten Sie den Inhalt vor
+        // Inhalt vorbereiten
         $fileContent = "";
         foreach ($tableData as $row) {
             $fileContent .= "{$row['name']} | {$row['points']} | {$row['time']}\n";
         }
 
-        // Schreiben Sie den Inhalt in die Datei und fügen Sie ihn hinzu
+        // Inhalt in die Datei schreiben und anhängen
         if (file_put_contents($filePath, $fileContent, FILE_APPEND)) {
             echo json_encode(array('success' => true));
         } else {
