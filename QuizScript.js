@@ -204,7 +204,7 @@ localStorage.setItem('quizPoints', points);
 localStorage.setItem('quizTime', timeElapsed);
 // Funktion zum Anzeigen eines Alert-Popup-Fensters mit den erreichten Punkten
 function showAlertWithPoints(points) {
-    alert(`Du hast ${points} Punkt(e) erreicht!`);
+    window.close();
 }
 // Funktion zum Wiederherstellen und Anzeigen der gespeicherten Zeit beim Laden der Seite
 function displaySavedTime() {
@@ -264,5 +264,5 @@ function showAlertWithPointsAndTime(points, timeElapsed) {
 document.getElementById("Button").addEventListener("click", function() {
     checkAnswers(); // Überprüfe die Antworten und aktualisiere 'points'
     endQuiz(); // Speichere Punkte und Zeit im localStorage
-	 window.close();
+	 
 });
