@@ -5,35 +5,31 @@
 <meta name="viewport" content="width=1280px height=800px">
 <title>Skat Memory Spiel</title>
 <link rel="stylesheet" href="MemoryStyle.css">
-
 </head>
-	<button class="restart-button" id="restart-button" onclick="restartGame()">Spiel starten</button>
-	<button class="show-all-button" id="absenden">Absenden und zurück</button>
-	
-	<header><h1> Skat Memory Spiel </h1></header>
-	<div class="moves-counter">
-    <h2>Züge: <span id="move-count">0</span></h2>
-	<div class="timer-container">
-    <h2>Zeit: <span id="timer">0s</span></h2>
-</div>
-</div>
+<body>
+    <button class="restart-button" id="restart-button" onclick="restartGame()">Spiel starten</button>
+    <button class="show-all-button" id="absenden">Absenden und zurück</button>
 
-	<main>
-	 
-   <div class = "main-container">
-       <div id = "card-board">	
-  </div>
-           <!--  -->
-       </div>
-	 <div class="popup-container" id="popupContainer">
-        <div class="popup-content">
-            <span class="close-button" onclick="closePopup()">X</span>
-            <h1>Glückwunsch!</h1>
-            <p>Du hast X Züge gebraucht.</p>
+    <header><h1> Skat Memory Spiel </h1></header>
+    <div class="moves-counter">
+        <h2>Züge: <span id="move-count">0</span></h2>
+        <div class="timer-container">
+            <h2>Zeit: <span id="timer">0s</span></h2>
         </div>
     </div>
 
-	</main>
-   <script src = "MemoryScript.js"></script>
+    <main>
+        <div class = "main-container">
+            <div id = "card-board"></div>
+        </div>
+
+        <div class="popup-container" id="popupContainer">
+            <div class="popup-content">
+                <!-- Popup-Inhalt wird dynamisch durch JavaScript eingefügt -->
+            </div>
+        </div>
+    </main>
+
+    <script src = "MemoryScript.js"></script>
 </body>
 </html>

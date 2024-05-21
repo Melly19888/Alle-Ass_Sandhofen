@@ -15,7 +15,7 @@ die maximale Breite auf 1200px und die Hintergrundfarbe auf #98f5ff.*/
 body{
 	margin-left: 5em;
 	 max-width: 1200px;
-    background-color: #98f5ff;
+    background-color: #c6e2ff;
 }
 
 /*Alle Bilder werden auf 100% der Breite des übergeordneten Elements gesetzt und als Blockelemente dargestellt.*/
@@ -225,6 +225,33 @@ h2{
         }
 		
 /* passen das Rasterlayout an kleinere Bildschirmgrößen an, indem sie die Anzahl der Spalten ändern.*/
+.popup-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.enlarged-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.close-image-button {
+    margin-top: 20px; /* Abstand zum Bild */
+    padding: 30px 50px; /* Innenabstand */
+    background-color: #fff0f5; /* Hintergrundfarbe */
+    color: 	#551a8b; /* Textfarbe */
+	font-size: 50px;
+	text-align: center;
+    border: none; /* Kein Rahmen */
+    border-radius: 5px; /* Abgerundete Ecken */
+    cursor: pointer; /* Zeiger ändern bei Hover */
+}
+
+.close-image-button:hover {
+    background-color: 	#8b8386 /* Dunklere Hintergrundfarbe bei Hover */
+}
 
 @media(max-width: 1000px){
     .grid{
@@ -268,7 +295,7 @@ h2{
 	body{
 	margin-left: 0;
 	 max-width: 1200px;
-    background-color: #07f078;
+    background-color: #c6e2ff;
 	}
 	main{
 	margin-top:0em;

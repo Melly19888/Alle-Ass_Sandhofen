@@ -68,10 +68,15 @@ function convertTimeToSeconds(timeString) {
 }
 
 function convertSecondsToTimeString(seconds) {
-    if (isNaN(seconds)) return '00:00';
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  if (isNaN(seconds)) return '00:00';
+
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+
+  const minutesString = minutes.toString().padStart(2, '0');
+  const secondsString = remainingSeconds.toString().padStart(2, '0');
+
+  return `${minutesString}:${secondsString}`;
 }
 
 

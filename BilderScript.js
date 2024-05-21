@@ -232,3 +232,4 @@ document.getElementById('start-button').addEventListener('click', startQuiz);
 
 // Load the first question when the page loads
 window.onload = loadQuestion;
+
