@@ -45,69 +45,40 @@ function updateTimer() {
 
     if (timerElement) {
         timerElement.textContent = `Zeit: ${minutesTotal.toString().padStart(2, "0")}:${secondsTotal.toString().padStart(2, "0")}`;
+        console.log(`Zeit: ${minutesTotal.toString().padStart(2, "0")}:${secondsTotal.toString().padStart(2, "0")}`); // Debugging-Ausgabe
     }
 }
-
 function checkAnswers(event) {
     clearInterval(interval); // Stoppt den Timer
-
     let pointsLocal = 0; // Punktzahl für richtige Antworten
     let allQuestionsAnswered = true; // Flag to check if all questions are answered
 
     // Überprüfung der Antworten
-    if (document.querySelector('input[name="FlußQuestion"]:checked')?.value === "B") {
-        pointsLocal++;
-    } else if (!document.querySelector('input[name="FlußQuestion"]:checked')) {
-        allQuestionsAnswered=false;
-    }
-	if (document.querySelector('input[name="17"]:checked')?.value === "C") {
-        pointsLocal++;
-    } else if (!document.querySelector('input[name="17"]:checked')) {
-        allQuestionsAnswered=false;
-    }
-
-   if (document.querySelector('input[name="Handschuhheim"]:checked')?.value === "B") {
-       pointsLocal++;
-   } else if (!document.querySelector('input[name="Handschuhheim"]:checked')) {
-       allQuestionsAnswered=false;
-   }
-
-   if (document.querySelector('input[name="Auf dem Königsstuhl"]:checked')?.value === "A") {
-       pointsLocal++;
-   } else if (!document.querySelector('input[name="Auf dem Königsstuhl"]:checked')) {
-       allQuestionsAnswered=false;
-   }
-
-   if (document.querySelector('input[name="Eppelheim"]:checked')?.value === "A") {
-       pointsLocal++;
-   } else if (!document.querySelector('input[name="Eppelheim"]:checked')) {
-       allQuestionsAnswered=false;
-   }
-
-   if (document.querySelector('input[name="Baden-Württemberg"]:checked')?.value === "B") {
-       pointsLocal++;
-   } else if (!document.querySelector('input[name="Baden-Württemberg"]:checked')) {
-       allQuestionsAnswered=false;
-   }
-
-   if (document.querySelector('input[name="HD"]:checked')?.value === "C") {
-       pointsLocal++;
-   } else if (!document.querySelector('input[name="HD"]:checked')) {
-       allQuestionsAnswered=false;
-   }
-    
+    if (document.querySelector('input[name="FlußQuestion"]:checked')?.value === "B") { pointsLocal++; } else if (!document.querySelector('input[name="FlußQuestion"]:checked')) { allQuestionsAnswered=false; }
+    if (document.querySelector('input[name="17"]:checked')?.value === "C") { pointsLocal++; } else if (!document.querySelector('input[name="17"]:checked')) { allQuestionsAnswered=false; }
+    if (document.querySelector('input[name="Handschuhheim"]:checked')?.value === "B") { pointsLocal++; } else if (!document.querySelector('input[name="Handschuhheim"]:checked')) { allQuestionsAnswered=false; }
+    if (document.querySelector('input[name="Auf dem Königsstuhl"]:checked')?.value === "A") { pointsLocal++; } else if (!document.querySelector('input[name="Auf dem Königsstuhl"]:checked')) { allQuestionsAnswered=false; }
+    if (document.querySelector('input[name="Eppelheim"]:checked')?.value === "A") { pointsLocal++; } else if (!document.querySelector('input[name="Eppelheim"]:checked')) { allQuestionsAnswered=false; }
+    if (document.querySelector('input[name="Baden-Württemberg"]:checked')?.value === "B") { pointsLocal++; } else if (!document.querySelector('input[name="Baden-Württemberg"]:checked')) { allQuestionsAnswered=false; }
+    if (document.querySelector('input[name="HD"]:checked')?.value === "C") { pointsLocal++; } else if (!document.querySelector('input[name="HD"]:checked')) { allQuestionsAnswered=false; }
 
     if (!allQuestionsAnswered) {
         showCustomPopup("Beantworte alle Fragen");
         return;
     }
 
-    const timeElapsed= Date.now() -startTime;
-    localStorage.setItem('StaedteQuizPoint',pointsLocal.toString());
-    localStorage.setItem('StaedteQuizTime',timeElapsed.toString());
-    showAlertWithPointsAndTime(pointsLocal,timeElapsed);
+    const timeElapsed = Date.now() - startTime;
+    localStorage.setItem('StaedteQuizPoint', pointsLocal.toString());
+    localStorage.setItem('StaedteQuizTime', timeElapsed.toString());
+
+    showAlertWithPointsAndTime(pointsLocal, timeElapsed);
 }
 
+function showAlertWithPointsAndTime(points, timeElapsed) {
+    const minutes = Math.floor(timeElapsed / 60000);
+    const seconds = ((timeElapsed % 60000) / 1000).toFixed(0);
+
+}
 function showCustomPopup(message) {
     const popup=document.createElement("div");
     popup.classList.add("custom-popup");
@@ -129,26 +100,30 @@ function showCustomPopup(message) {
 function showAlertWithPointsAndTime(points,timeElapsed){
     const minutes=Math.floor(timeElapsed/60000);
     const seconds=((timeElapsed%60000)/1000).toFixed(0);
-    
+   
 }
 
 function displaySavedTime() {
-    const savedTimeStr = localStorage.getItem('StaedteQuizTime');
-    if (savedTimeStr) {
-        const savedTimeMs = parseInt(savedTimeStr, 10);
-        if (!isNaN(savedTimeMs)) {
-            const minutesSaved = Math.floor(savedTimeMs / 60000);
-            const secondsSaved = ((savedTimeMs % 60000) / 1000).toFixed(0);
-            const savedTimeElement = document.getElementById('savedTime');
-            if (savedTimeElement) {
-                savedTimeElement.textContent = `Gespeicherte Zeit: ${minutesSaved} Minute(n) und ${secondsSaved} Sekunde(n).`;
+    const savedTimeStr=localStorage.getItem('StaedteQuizTime');
+    if(savedTimeStr){
+        const savedTimeMs=parseInt(savedTimeStr,10);
+        if(!isNaN(savedTimeMs)){
+            const minutesSaved=Math.floor(savedTimeMs/60000);
+            const secondsSaved=((savedTimeMs%60000)/1000).toFixed(0);
+            const savedTimeElement=document.getElementById('savedTime');
+            if(savedTimeElement){
+                savedTimeElement.textContent=`Gespeicherte Zeit: ${minutesSaved} Minute(n) und ${secondsSaved} Sekunde(n).`;
+                console.log("Gespeicherte Zeit:", savedTimeElement.textContent); // Debugging-Ausgabe
             }
+        } else{
+            console.error("Gespeicherte Zeit ist keine gültige Zahl.");
         }
     }
 }
 
 document.getElementById("Button").addEventListener("click",function(){
     checkAnswers();
+    displaySavedTime();
     window.close();
 });
 

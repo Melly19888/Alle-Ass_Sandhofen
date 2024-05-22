@@ -1,22 +1,21 @@
 let startTime;
 let interval;
 let points = 0;
-let timeElapsed;
 
 document.addEventListener('DOMContentLoaded', function() {
     const startButton = document.createElement('button');
-    startButton.textContent = '\u2766 Quiz starten \u2766'; // Farnblatt-Symbole hinzufügen
+    startButton.textContent = '\u2766 Quiz starten \u2766';
     // Stil für den Button festlegen
-    startButton.style.position = 'absolute'; // Positionierung auf absolute setzen
-    startButton.style.top = '50%'; // Vertikal zentrieren
-    startButton.style.left = '50%'; // Horizontal zentrieren
-    startButton.style.transform = 'translate(-50%, -50%)'; // Verschiebung um die eigene Größe korrigieren
-    startButton.style.backgroundColor = '#00008b'; // Hintergrundfarbe auf Grün setzen
-    startButton.style.color = '#ffff00'; // Schriftfarbe auf Blau setzen
-    startButton.style.borderRadius = '15px'; // Abgerundete Ecken für den Button
-    startButton.style.padding = '10px 20px'; // Innenabstand für den Button
-    startButton.style.width = '500px'; // Breite des Buttons festlegen
-    startButton.style.height = '150px'; // Höhe des Buttons festlegen
+    startButton.style.position = 'absolute';
+    startButton.style.top = '50%';
+    startButton.style.left = '50%';
+    startButton.style.transform = 'translate(-50%, -50%)';
+    startButton.style.backgroundColor = '#00008b';
+    startButton.style.color = '#ffff00';
+    startButton.style.borderRadius = '15px';
+    startButton.style.padding = '10px 20px';
+    startButton.style.width = '500px';
+    startButton.style.height = '150px';
     startButton.style.fontSize = '50px';
 
     document.body.insertBefore(startButton, document.body.firstChild);
@@ -32,14 +31,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Funktion zum Aktualisieren des Timers
 function updateTimer() {
     const currentTime = Date.now();
     const timeElapsed = currentTime - startTime;
     const seconds = Math.floor(timeElapsed / 1000);
     document.getElementById('timer').textContent = `Zeit: ${seconds} Sekunden`;
 }
-
 // Funktion zum Überprüfen der Antworten und Zählen der Punkte
 function checkAnswers() {
     points = 0; // Setze 'points' zurück auf 0
@@ -215,92 +212,39 @@ function allQuestionsAnswered() {
     return true;
 }
 
-document.getElementById("Button").addEventListener("click", function() {
-    checkAnswers();
-    endQuiz()
+document.getElementById("Button").addEventListener("click", function() { 
+    checkAnswers(); 
+    endQuiz(); 
 });
 
-// Angenommen, 'points' und 'time' sind Ihre Variablen für Punkte und Zeit 
-localStorage.setItem('quizPoints', points); 
-localStorage.setItem('quizTimes', timeElapsed);
+function endQuiz() { 
+    const { minutes, seconds }= calculateElapsedTime(); 
+    localStorage.setItem('quizPoints', points.toString()); 
+    localStorage.setItem('quizTimes', `${minutes}:${seconds.padStart(2,'0')}`); 
+}
 
-// Funktion zum Anzeigen eines Alert-Popup-Fensters mit den erreichten Punkten 
-function showAlertWithPoints(points) { window.close(); }
+function calculateElapsedTime(){ 
+    const timeElapsed=Date.now()-startTime; 
+    const minutes=Math.floor(timeElapsed/60000); 
+    const seconds=((timeElapsed%60000)/1000).toFixed(0); 
+    return { minutes, seconds }; 
+}
 
-// Funktion zum Wiederherstellen und Anzeigen der gespeicherten Zeit beim Laden der Seite 
-function displaySavedTime() { 
+function updateTableWithTimeAndPoints(points) { 
+    // Hole die gespeicherte Zeit aus dem localStorage
     const savedTime=localStorage.getItem('quizTimes'); 
     if(savedTime){ 
-    // Stellen Sie sicher, dass savedTime eine Zahl ist 
-    const timeElapsed=parseInt(savedTime,10); 
+        // Stelle sicher, dass savedTime eine Zahl ist
+        const timeElapsed=parseInt(savedTime,10); 
+        // Berechne Minuten und Sekunden
+        const minutes=Math.floor(timeElapsed/60000); 
+        const seconds=((timeElapsed%60000)/1000).toFixed(0); }
+}
 
-    // Berechne Minuten und Sekunden 
+function showAlertWithPointsAndTime(points,timeElapsed){ 
+    // Berechne Minuten und Sekunden aus der verstrichenen Zeit
     const minutes=Math.floor(timeElapsed/60000); 
-    const seconds=((timeElapsed%60000)/1000).toFixed(0);
-
-    // Hier können Sie entscheiden, wo Sie die gespeicherte Zeit anzeigen möchten. 
-    const savedTimeElement=document.getElementById('savedTime'); 
-
-    if(savedTimeElement){ savedTimeElement.textContent=`Gespeicherte Zeit: ${minutes} Minute(n) und ${seconds} Sekunde(n).`; } } }
-
-// Event-Listener für das Laden der Seite hinzufügen, um die gespeicherte Zeit anzuzeigen 
-document.addEventListener('DOMContentLoaded', function() { displaySavedTime(); });
-
-function endQuiz() {
-   const { minutes, seconds }= calculateElapsedTime();
-
-   localStorage.setItem('quizPoints', points.toString());
-   localStorage.setItem('quizTimes', `${minutes}:${seconds.padStart(2,'0')}`);
-}
-
-function calculateElapsedTime(){
-   const timeElapsed=Date.now()-startTime;
-   const minutes=Math.floor(timeElapsed/60000);
-   const seconds=((timeElapsed%60000)/1000).toFixed(0);
-
-   return { minutes, seconds };
-}
-function updateTableWithTimeAndPoints(points) { 
-
-// Hole die gespeicherte Zeit aus dem localStorage 
-
-const savedTime=localStorage.getItem('quizTimes'); 
-
-if(savedTime){ 
-
-// Stelle sicher, dass savedTime eine Zahl ist 
-
-const timeElapsed=parseInt(savedTime,10);
-
-// Berechne Minuten und Sekunden
-
-const minutes=Math.floor(timeElapsed/60000);
-
-const seconds=((timeElapsed%60000)/1000).toFixed(0);
-
-}}
-
-function showAlertWithPointsAndTime(points,timeElapsed){
-
-// Berechne Minuten und Sekunden aus der verstrichenen Zeit
-
-const minutes=Math.floor(timeElapsed/60000);
-
-const seconds=((timeElapsed%60000)/1000).toFixed(0);
-
-}
-
-document.getElementById("Button").addEventListener("click", function(){ 
-   checkAnswers(); 
-
-   const { minutes, seconds }= calculateElapsedTime();
-
-   console.log('Speichere Punkte:', points);
-   console.log('Speichere Zeit:', `${minutes}:${seconds.padStart(2,'0')}`);
-
-   localStorage.setItem('quizPoints', points.toString());
-   localStorage.setItem('quizTimes', `${minutes}:${seconds.padStart(2,'0')}`);
-});
+    const seconds=((timeElapsed%60000)/1000).toFixed(0); }
 
 
 function showCustomPopup(message) {
