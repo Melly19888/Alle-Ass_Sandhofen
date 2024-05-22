@@ -73,8 +73,6 @@ function loadAndDisplayResults() {
      newRow.innerHTML=`<td>${playerName}</td><td>${combinedPoints}</td><td>${combinedTimeFormatted}</td>`;
      tableBody.appendChild(newRow);
 
-     clearLocalStorage();
-     console.log(`Added/Updated row for ${playerName}: Points=${combinedPoints}, Time=${combinedTimeFormatted}`);
 }
 function convertMillisecondsToTimeString(milliseconds) {
     if (typeof milliseconds !== 'number' || isNaN(milliseconds) || milliseconds < 0) {
@@ -153,8 +151,7 @@ SpielStarten.addEventListener('click', function(event) {
 });
 
 window.addEventListener('load', () => setInterval(loadAndDisplayResults, 60000));
-window.addEventListener('beforeunload', saveTableData);
-document.addEventListener('DOMContentLoaded', () => { restoreTableData(); startTableUpdateInterval(); });
+
 
 function EMail() { 
    const tableDataString=localStorage.getItem('tableData'); 
@@ -265,7 +262,7 @@ row.cells[1].textContent=parseInt(row.cells[1].textContent)+parseInt(quizPoints)
 
 document.addEventListener('DOMContentLoaded', () => {
     
-  
+	
     startTableUpdateInterval();
 });
 
@@ -327,7 +324,13 @@ rows.map(r=>({name:r.cells[0].textContent, points:r.cells[1].textContent, time:r
 });
 
 // Event-Listener für Datenlöschen
-document.getElementById("Datenlöschen").addEventListener("click", function() { EMail(); });
+document.getElementById("Datenlöschen").addEventListener("click", function() { EMail();
+  clearTableData();
+ // Entferne die Tabelle aus dem DOM
+   const spielerTabelleContainer=document.querySelector('#spielerTabelle').parentNode;
+   spielerTabelleContainer.removeChild(document.querySelector('#spielerTabelle'));
+   clearLocalStorage();
+});
 
 
 
