@@ -97,7 +97,7 @@ function match() {
 }
 
 function unmatch() {
-    console.log("unmatch");
+ 
     let selectedCards=document.querySelectorAll('.selected');
     setTimeout(()=>{
         selectedCards.forEach((card)=>{
@@ -108,7 +108,7 @@ function unmatch() {
 }
 
 function checkCardMatch(guess1, guess2) {
-    console.log("Prüfe");
+ 
     if(guess1==guess2){
     match();
     if(document.querySelectorAll('.matched').length===shuffledCards.length){
@@ -240,10 +240,10 @@ if(count<2){
 });
 function saveGameData() {
     let elapsedSecondsSinceStart=Math.floor((Date.now()-startTime)/1000);
-    console.log("Verstrichene Zeit in Sekunden:",elapsedSecondsSinceStart); // Hinzugefügte Konsolenausgabe
+   
 
     let formattedTime=formatTime(elapsedSecondsSinceStart);
-    console.log("Formatierte Zeit:",formattedTime); // Hinzugefügte Konsolenausgabe
+    
 
     let moves=document.getElementById('move-count').textContent;
     let points=calculatePoints(moves);
@@ -251,8 +251,7 @@ function saveGameData() {
     localStorage.setItem('memoryGamePoints',points);
     localStorage.setItem('memoryGameTime',formatTime(elapsedSecondsSinceStart));
 
-    console.log("Gespeicherte Punkte:",points);
-    console.log("Gespeicherte Zeit:",formattedTime);
+   
 }
 
 // Funktion zur Berechnung der Punkte basierend auf der Anzahl der Züge

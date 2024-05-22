@@ -37,17 +37,19 @@ document.addEventListener('DOMContentLoaded', function() {
 function updateTimer() {
     const currentTime = Date.now();
     const timeElapsed = currentTime - startTime;
-    const secondsTotal = Math.floor(timeElapsed / 1000);
+
+    const minutesTotal = Math.floor(timeElapsed / 60000);
+    const secondsTotal = Math.floor((timeElapsed % 60000) / 1000);
 
     const timerElement = document.getElementById('timer');
 
     if (timerElement) {
-        timerElement.textContent = `Zeit: ${secondsTotal} Sekunden`;
+        timerElement.textContent = `Zeit: ${minutesTotal.toString().padStart(2, "0")}:${secondsTotal.toString().padStart(2, "0")}`;
     }
 }
 
 function checkAnswers(event) {
-    clearInterval(interval); // Stoppt den Timer
+     clearInterval(interval); // Stoppt den Timer
 
     let pointsLocal = 0; // Punktzahl für richtige Antworten
     let allQuestionsAnswered = true; // Flag to check if all questions are answered
@@ -95,73 +97,66 @@ function checkAnswers(event) {
        allQuestionsAnswered=false;
    }
 
-   // Check if not all questions are answered
-   if (!allQuestionsAnswered) { 
-       showCustomPopup("Beantworte alle Fragen");
-       return; 
-   }
+    if (!allQuestionsAnswered) {
+        showCustomPopup("Beantworte alle Fragen");
+        return;
+    }
 
-   const timeElapsed= Date.now() -startTime;
-
-   localStorage.setItem('StaedteQuizPoint',pointsLocal.toString());
-   localStorage.setItem('StaedteQuizTime',timeElapsed.toString());
-
-   showAlertWithPointsAndTime(pointsLocal,timeElapsed);
+    const timeElapsed= Date.now() -startTime;
+    localStorage.setItem('StaedteQuizPoint',pointsLocal.toString());
+    localStorage.setItem('StaedteQuizTime',timeElapsed.toString());
+    showAlertWithPointsAndTime(pointsLocal,timeElapsed);
 }
 
-function showCustomPopup(message) { 
-     const popup=document.createElement("div"); 
-     popup.classList.add("custom-popup"); 
-     popup.textContent=message; 
-     document.body.appendChild(popup); 
-
-     popup.style.position='fixed'; 
-     popup.style.backgroundColor='darkblue'; 
-     popup.style.color='white'; 
-     popup.style.padding='20px'; 
-     popup.style.borderRadius='25px'; 
-     popup.style.zIndex='9999'; 
-     popup.style.textAlign='center'; 
-     popup.style.fontSize='50px'; 
-
-     popup.style.top=`${(window.innerHeight-popup.offsetHeight)/2}px`; 
-     popup.style.left=`${(window.innerWidth-popup.offsetWidth)/2}px`; 
-
-     setTimeout(() => { document.body.removeChild(popup); },5000); 
+function showCustomPopup(message) {
+    const popup=document.createElement("div");
+    popup.classList.add("custom-popup");
+    popup.textContent=message;
+    document.body.appendChild(popup);
+    popup.style.position='fixed';
+    popup.style.backgroundColor='darkblue';
+    popup.style.color='white';
+    popup.style.padding='20px';
+    popup.style.borderRadius='25px';
+    popup.style.zIndex='9999';
+    popup.style.textAlign='center';
+    popup.style.fontSize='50px';
+    popup.style.top=`${(window.innerHeight-popup.offsetHeight)/2}px`;
+    popup.style.left=`${(window.innerWidth-popup.offsetWidth)/2}px`;
+    setTimeout(() => { document.body.removeChild(popup); },5000);
 }
 
-function showAlertWithPointsAndTime(points,timeElapsed){ 
-      const minutes=Math.floor(timeElapsed/60000); 
-      const seconds=((timeElapsed%60000)/1000).toFixed(0); 
-
-     
+function showAlertWithPointsAndTime(points,timeElapsed){
+    const minutes=Math.floor(timeElapsed/60000);
+    const seconds=((timeElapsed%60000)/1000).toFixed(0);
+    
 }
 
-function displaySavedTime(){ 
-      const savedTimeStr=localStorage.getItem('StaedteQuizTime'); 
-
-      if(savedTimeStr){ 
-          const savedTimeMs=parseInt(savedTimeStr,10); 
-
-          if(!isNaN(savedTimeMs)){ 
-              const minutesSaved=Math.floor(savedTimeMs/60000); 
-              const secondsSaved=((savedTimeMs%60000)/1000).toFixed(0); 
-
-              const savedTimeElement=document.getElementById('savedTime'); 
-
-              if(savedTimeElement){ savedTimeElement.textContent=`Gespeicherte Zeit: ${minutesSaved} Minute(n) und ${secondsSaved} Sekunde(n).`; } 
-
-          }
-      }
+function displaySavedTime() {
+    const savedTimeStr = localStorage.getItem('StaedteQuizTime');
+    if (savedTimeStr) {
+        const savedTimeMs = parseInt(savedTimeStr, 10);
+        if (!isNaN(savedTimeMs)) {
+            const minutesSaved = Math.floor(savedTimeMs / 60000);
+            const secondsSaved = ((savedTimeMs % 60000) / 1000).toFixed(0);
+            const savedTimeElement = document.getElementById('savedTime');
+            if (savedTimeElement) {
+                savedTimeElement.textContent = `Gespeicherte Zeit: ${minutesSaved} Minute(n) und ${secondsSaved} Sekunde(n).`;
+            }
+        }
+    }
 }
 
 document.getElementById("Button").addEventListener("click",function(){
-	checkAnswers();
-	});
+    checkAnswers();
+    window.close();
+});
 
 function convertToSeconds(timeString){
-	let [minutes,seconds]=timeString.split(":").map(Number); 
-	return(minutes*60)+seconds; }
+    let [minutes,seconds]=timeString.split(":").map(Number);
+    return(minutes*60)+seconds;
+}
 
-function convertToMinutes(seconds){ 
-return`${Math.floor(seconds/60).toString().padStart(2,"0")}:${(seconds%60).toString().padStart(2,"0")}`; }
+function convertToMinutes(seconds){
+    return`${Math.floor(seconds/60).toString().padStart(2,"0")}:${(seconds%60).toString().padStart(2,"0")}`;
+}

@@ -171,9 +171,7 @@ function checkAnswer(selectedIndex) {
 
     if (selectedIndex === currentQuestion.correctOptionIndex) {
         score++;
-        console.log(`Richtige Antwort! Aktuelle Punktzahl ist ${score}`);
-    } else {
-        console.log(`Falsche Antwort! Aktuelle Punktzahl ist ${score}`);
+       
     }
 
     currentQuestionIndex++;
