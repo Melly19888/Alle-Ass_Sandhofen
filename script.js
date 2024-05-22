@@ -76,6 +76,9 @@ function loadAndDisplayResults() {
     const newRow=document.createElement('tr');
     newRow.innerHTML=`<td>${playerName}</td><td>${combinedPoints}</td><td>${combinedTimeFormatted}</td>`;
     tableBody.appendChild(newRow);
+	
+	 console.log('Geladene Punkte:', quizPoints);
+   console.log('Geladene Zeit in Sekunden:', quizTimeInSeconds);
 }
 
 function convertMillisecondsToTimeString(milliseconds) {

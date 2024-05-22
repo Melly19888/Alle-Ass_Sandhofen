@@ -246,20 +246,20 @@ function displaySavedTime() {
 // Event-Listener für das Laden der Seite hinzufügen, um die gespeicherte Zeit anzuzeigen 
 document.addEventListener('DOMContentLoaded', function() { displaySavedTime(); });
 
-function endQuiz() { 
-// Berechne die verstrichene Zeit seit dem Start des Quiz 
-const timeElapsed=Date.now()-startTime; 
+function endQuiz() {
+   const { minutes, seconds }= calculateElapsedTime();
 
-const minutes=Math.floor(timeElapsed/60000); 
+   localStorage.setItem('quizPoints', points.toString());
+   localStorage.setItem('quizTimes', `${minutes}:${seconds.padStart(2,'0')}`);
+}
 
-const seconds=((timeElapsed%60000)/1000).toFixed(0);
+function calculateElapsedTime(){
+   const timeElapsed=Date.now()-startTime;
+   const minutes=Math.floor(timeElapsed/60000);
+   const seconds=((timeElapsed%60000)/1000).toFixed(0);
 
-// Speichere Punkte und verstrichene Zeit in localStorage 
-
-localStorage.setItem('quizPoints', points.toString()); 
-
-localStorage.setItem('quizTimes', `${minutes}:${seconds.padStart(2,'0')}`); }
-
+   return { minutes, seconds };
+}
 function updateTableWithTimeAndPoints(points) { 
 
 // Hole die gespeicherte Zeit aus dem localStorage 
@@ -290,17 +290,18 @@ const seconds=((timeElapsed%60000)/1000).toFixed(0);
 
 }
 
-document.getElementById("Button").addEventListener("click", function(){
+document.getElementById("Button").addEventListener("click", function(){ 
+   checkAnswers(); 
 
-checkAnswers();
+   const { minutes, seconds }= calculateElapsedTime();
 
-// Überprüfe die Antworten und aktualisiere 'points'
+   console.log('Speichere Punkte:', points);
+   console.log('Speichere Zeit:', `${minutes}:${seconds.padStart(2,'0')}`);
 
-endQuiz();
-
-// Speichere Punkte und Zeit im localStorage
-window.close();
+   localStorage.setItem('quizPoints', points.toString());
+   localStorage.setItem('quizTimes', `${minutes}:${seconds.padStart(2,'0')}`);
 });
+
 
 function showCustomPopup(message) {
     const popup=document.createElement("div");
