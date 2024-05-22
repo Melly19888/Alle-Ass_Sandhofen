@@ -49,7 +49,7 @@ function updateTimer() {
 }
 
 function checkAnswers(event) {
-     clearInterval(interval); // Stoppt den Timer
+    clearInterval(interval); // Stoppt den Timer
 
     let pointsLocal = 0; // Punktzahl für richtige Antworten
     let allQuestionsAnswered = true; // Flag to check if all questions are answered
@@ -60,8 +60,7 @@ function checkAnswers(event) {
     } else if (!document.querySelector('input[name="FlußQuestion"]:checked')) {
         allQuestionsAnswered=false;
     }
-
-    if (document.querySelector('input[name="17"]:checked')?.value === "C") {
+	if (document.querySelector('input[name="17"]:checked')?.value === "C") {
         pointsLocal++;
     } else if (!document.querySelector('input[name="17"]:checked')) {
         allQuestionsAnswered=false;
@@ -96,6 +95,7 @@ function checkAnswers(event) {
    } else if (!document.querySelector('input[name="HD"]:checked')) {
        allQuestionsAnswered=false;
    }
+    
 
     if (!allQuestionsAnswered) {
         showCustomPopup("Beantworte alle Fragen");
