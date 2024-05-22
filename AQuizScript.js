@@ -134,7 +134,7 @@ function showAlertWithPointsAndTime(points,timeElapsed){
       const minutes=Math.floor(timeElapsed/60000); 
       const seconds=((timeElapsed%60000)/1000).toFixed(0); 
 
-      alert(`Punkte: ${points}\nZeit: ${minutes} Minute(n) und ${seconds} Sekunde(n)`); 
+     
 }
 
 function displaySavedTime(){ 

@@ -1,8 +1,9 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = file_get_contents('php://input');
-    $tableData = json_decode($input, true);
+    error_log("Empfangene Eingabe: " . $input); // Debugging-Ausgabe
 
+    $tableData = json_decode($input, true);
     if ($tableData) {
         $filePath = 'spielergebnisse.txt'; // Pfad zur Datei
 
@@ -25,7 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Inhalt vorbereiten
         $fileContent = "";
         foreach ($tableData as $row) {
-            $fileContent .= "{$row['name']} | {$row['points']} | {$row['time']}\n";
+            if (isset($row['name']) && isset($row['points']) && isset($row['time'])) {
+                $fileContent .= "{$row['name']} | {$row['points']} | {$row['time']}\n";
+            } else {
+                error_log("Ungültige Datenstruktur: " . print_r($row, true));
+                echo json_encode(array('success' => false, 'error' => 'Ungültige Datenstruktur'));
+                exit;
+            }
         }
 
         // Inhalt in die Datei schreiben und anhängen
