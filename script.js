@@ -1,4 +1,3 @@
-
 const SpielStarten = document.getElementById('SpielStarten');
 let player1Points = 0,
     rolesChosenFlag = false,
@@ -18,30 +17,27 @@ for (let i = 0; i < rows.length; i++) {
     }
     tableData.push(rowData.join(' | '));
 }
+
 function convertTimeToSeconds(timeString) {
     if (typeof timeString !== 'string') {
         return 0;
     }
-
     const parts = timeString.split(':');
     if (parts.length !== 2) {
         return 0;
     }
-
     const minutes = parseInt(parts[0], 10);
     const seconds = parseInt(parts[1], 10);
-
     if (isNaN(minutes) || isNaN(seconds)) {
         return 0;
     }
-
     return (minutes * 60) + seconds;
 }
+
 function loadAndDisplayResults() {
     let memoryGamePoints = parseInt(localStorage.getItem('memoryGamePoints') || '0');
     let memoryGameTimeInSeconds = convertTimeToSeconds(localStorage.getItem('memoryGameTime') || '00:00');
 
-    // Korrigiere hier den Schlüssel für StaedteQuizTime
     let staedteQuizPoints = parseInt(localStorage.getItem('StaedteQuizPoint') || '0');
     let staedteQuizTimeInSeconds = convertTimeToSeconds(localStorage.getItem('StaedteQuizTime') || '00:00');
 
@@ -57,45 +53,28 @@ function loadAndDisplayResults() {
 
     let combinedPoints = memoryGamePoints + staedteQuizPoints + quizPoints + bilderQuizPoints;
 
-    // Sicherstellen, dass alle Zeiten korrekt addiert werden
     let combinedTimeInSeconds = memoryGameTimeInSeconds + staedteQuizTimeInSeconds + quizTimeInSeconds + bilderTimeInSeconds;
 
-    // Sicherstellen, dass die kombinierte Zeit eine gültige Zahl ist
     if (isNaN(combinedTimeInSeconds)) combinedTimeInSeconds = 0;
 
-    // Konvertiere kombinierte Sekunden zurück in das Format MM:SS
-    let combinedTimeFormatted = convertSecondsToTimeString(combinedTimeInSeconds);
+    let combinedTimeFormatted = convertMillisecondsToTimeString(combinedTimeInSeconds * 1000);
 
-    const tableBody = document.querySelector('#spielerTabelle tbody');
+    const tableBody=document.querySelector('#spielerTabelle tbody');
 
-    if (!tableBody) return;
+    if(!tableBody)return;
 
-    let existingRowIndex;
-
-    for (let i=0; i<tableBody.rows.length; i++) {
-        if (tableBody.rows[i].cells[0].textContent === playerName) {
-            existingRowIndex=i;
-            break;
+    for(let i=tableBody.rows.length-1;i>=0;i--){
+        if(tableBody.rows[i].cells[0].textContent===playerName){
+            tableBody.deleteRow(i);
         }
-    }
-
-    if (existingRowIndex !== undefined) {
-        tableBody.rows[existingRowIndex].cells[1].textContent=combinedPoints;
-        tableBody.rows[existingRowIndex].cells[2].textContent=combinedTimeFormatted;
-        clearLocalStorage();
-
-        // Debugging-Ausgabe zur Überprüfung der Werte
-        console.log(`Updated row for ${playerName}: Points=${combinedPoints}, Time=${combinedTimeFormatted}`);
-
-     } else {
-        const newRow=document.createElement('tr');
-        newRow.innerHTML=`<td>${playerName}</td><td>${combinedPoints}</td><td>${combinedTimeFormatted}</td>`;
-        tableBody.appendChild(newRow);
-        clearLocalStorage();
-
-        // Debugging-Ausgabe zur Überprüfung der Werte
-        console.log(`Added new row for ${playerName}: Points=${combinedPoints}, Time=${combinedTimeFormatted}`);
      }
+
+     const newRow=document.createElement('tr');
+     newRow.innerHTML=`<td>${playerName}</td><td>${combinedPoints}</td><td>${combinedTimeFormatted}</td>`;
+     tableBody.appendChild(newRow);
+
+     clearLocalStorage();
+     console.log(`Added/Updated row for ${playerName}: Points=${combinedPoints}, Time=${combinedTimeFormatted}`);
 }
 function convertMillisecondsToTimeString(milliseconds) {
     if (typeof milliseconds !== 'number' || isNaN(milliseconds) || milliseconds < 0) {
@@ -152,37 +131,30 @@ function showCustomPopup(message) {
    }, 5000);
 }
 
-SpielStarten.addEventListener('click', function(event) { 
-   const player1NameInput=document.getElementById("player1Name"); 
+SpielStarten.addEventListener('click', function(event) {
+   const player1NameInput=document.getElementById("player1Name");
 
    if (!rolesChosenFlag && player1NameInput.value.trim() !== "") { 
-       // Überprüfen, ob der Name bereits existiert
-       if (isPlayerNameExists(player1NameInput.value.trim())) {
-           showCustomPopup("Spielername schon vorhanden, wähle einen anderen");
-           return; // Verhindere das Starten des Spiels
-       }
+       if (isPlayerNameExists(player1NameInput.value.trim())) { 
+           showCustomPopup("Spielername schon vorhanden, wähle einen anderen"); 
+           return; 
+       } 
 
        rolesChosenFlag=true; 
        player1NameInput.readOnly=true; 
        localStorage.setItem('playerName', player1NameInput.value.trim()); 
-       localStorage.setItem('gameStarted', true); // Markiere das Spiel als gestartet
+       localStorage.setItem('gameStarted', true); 
 
        ['BilderRaetsel','AllgemeineQuiz','StädteQuiz','Memory'].forEach(id => document.getElementById(id).style.display="block"); 
        ['Datenlöschen','SpielStarten'].forEach(id => document.getElementById(id).style.display="none"); 
 
-       addPlayerToTable(player1NameInput.value.trim()); 
-
-   } else showCustomPopup("Bitte geben deinen Namen ein."); 
+       addPlayerToTable(player1NameInput.value.trim());
+   } else showCustomPopup("Bitte geben deinen Namen ein.");
 });
 
 window.addEventListener('load', () => setInterval(loadAndDisplayResults, 60000));
-
 window.addEventListener('beforeunload', saveTableData);
-
-document.addEventListener('DOMContentLoaded', () => { 
-   restoreTableData(); 
-   startTableUpdateInterval(); 
-});
+document.addEventListener('DOMContentLoaded', () => { restoreTableData(); startTableUpdateInterval(); });
 
 function EMail() { 
    const tableDataString=localStorage.getItem('tableData'); 
@@ -210,42 +182,29 @@ function clearTableData() {
 }
 
 function addPlayerToTable(playerName){
+   const tableBody=document.querySelector("#spielerTabelle tbody")||document.querySelector("#spielerTabelle");
 
-const tableBody=document.querySelector("#spielerTabelle tbody")||document.querySelector("#spielerTabelle"); 
+   let playerExists=false;
 
-let playerExists=false; 
+   for(let row of tableBody.rows){ 
+      if(row.cells[0].textContent===playerName){ 
+         playerExists=true;break;
+      } 
+   }
 
-for(let row of tableBody.rows){ 
+   if(playerExists){ 
+      showCustomPopup("Spielername schon vorhanden, wähle einen anderen"); 
+      rolesChosenFlag=false; 
+      document.getElementById("player1Name").readOnly=false; 
+   }else{ 
+      let newRow=tableBody.insertRow(); 
 
-if(row.cells[0].textContent===playerName){ 
+      ['name','punkte','zeit'].forEach((cls,i)=>{ 
+         let cell=newRow.insertCell(i); cell.className='spieler-'+cls; cell.textContent=i===0?playerName:'';
+      }); 
 
-playerExists=true;break;}
-
-} 
-
-if(playerExists){
-
-showCustomPopup("Spielername schon vorhanden, wähle einen anderen");
-
-rolesChosenFlag=false; // Setze die Flag zurück
-
-document.getElementById("player1Name").readOnly=false; // Erlaube dem Benutzer erneut den Namen einzugeben
-
-}else{
-
-let newRow=tableBody.insertRow(); 
-
-['name','punkte','zeit'].forEach((cls,i)=>{ 
-
-let cell=newRow.insertCell(i); 
-
-cell.className='spieler-'+cls; 
-
-cell.textContent=i===0?playerName:'';});
-
-saveTableData();
-
-}
+      saveTableData(); 
+   } 
 }
 
 function isPlayerNameExists(playerName){
@@ -259,24 +218,6 @@ return true;}
 
 }
 return false;}
-
-function restoreTableData(){
-
-const tableDataString=localStorage.getItem('tableData'); 
-
-if(tableDataString){
-
-const tableBody=document.querySelector('#spielerTabelle tbody'); 
-
-JSON.parse(tableDataString).forEach(row=>{
-
-let r=tableBody.insertRow(); ['name','points','time'].forEach((key,i)=>r.insertCell(i).textContent=row[key]);
-
-});
-
-}
-}
-
 
 
 function updatePlayerData() {
@@ -305,7 +246,6 @@ function updatePlayerData() {
         saveTableData();
     }
 }
-
 function updateTableWithQuizResults(){
 
 const playerName=localStorage.getItem('playerName'), quizPoints=parseInt(localStorage.getItem('quizPoints')), quizTime=parseInt(convertTimeToSeconds(localStorage.getItem('quizTime')));
@@ -323,11 +263,38 @@ row.cells[1].textContent=parseInt(row.cells[1].textContent)+parseInt(quizPoints)
 } saveTableData();}
 }
 
-// Entferne den doppelten Aufruf von restoreTableData und startTableUpdateInterval
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
+    
+  
     startTableUpdateInterval();
 });
 
+function addPlayerToTable(playerName) {
+    const tableBody = document.querySelector("#spielerTabelle tbody") || document.querySelector("#spielerTabelle");
+
+    let playerExists = false;
+
+    for (let row of tableBody.rows) {
+        if (row.cells[0].textContent === playerName) {
+            playerExists = true;
+            break;
+        }
+    }
+
+    if (playerExists) {
+        showCustomPopup("Spielername schon vorhanden, wähle einen anderen");
+        rolesChosenFlag = false; // Setze die Flag zurück
+        document.getElementById("player1Name").readOnly = false; // Erlaube dem Benutzer erneut den Namen einzugeben
+    } else {
+        let newRow = tableBody.insertRow();
+        ['name', 'punkte', 'zeit'].forEach((cls, i) => {
+            let cell = newRow.insertCell(i);
+            cell.className = 'spieler-' + cls;
+            cell.textContent = i === 0 ? playerName : '';
+        });
+        saveTableData();
+    }
+}
 function startTableUpdateInterval() {
     setInterval(updatePlayerData, 3000); // Alle 3 Sekunden aktualisieren
 }
@@ -350,54 +317,20 @@ rows.map(r=>({name:r.cells[0].textContent, points:r.cells[1].textContent, time:r
 
 // Event-Listener für die Quiz-Buttons
 
+// Event-Listener für die Quiz-Buttons
 ['StädteQuiz','Memory','BilderRaetsel','AllgemeineQuiz'].forEach(id=>{
-
-document.getElementById(id).addEventListener("click", function(){ this.style.display="none"; clickedButtonsCount++; checkAndShowSubmitButton();});
+   document.getElementById(id).addEventListener("click", function(){
+      this.style.display="none";
+      clickedButtonsCount++;
+      checkAndShowSubmitButton();
+   });
 });
 
 // Event-Listener für Datenlöschen
-
 document.getElementById("Datenlöschen").addEventListener("click", function() { EMail(); });
 
-// Neue Funktion zum Überprüfen, ob das Spiel bereits gestartet wurde
 
-function checkIfPlayerExists() {
 
-const gameStartedFromLocalStorage = localStorage.getItem("gameStarted");
 
-if (!gameStartedFromLocalStorage) return;
 
-const playerNameFromLocalStorage = localStorage.getItem("playerName");
 
-if (!playerNameFromLocalStorage) return;
-
-const tableBody=document.querySelector("#spielerTabelle tbody")||document.querySelector("#spielerTabelle");
-
-let playerExists=false;
-
-for(let row of tableBody.rows){
-
-if(row.cells[0].textContent===playerNameFromLocalStorage){
-
-playerExists=true;
-
-break;}
-
-}
-
-// Füge den Spieler nur hinzu, wenn er noch nicht existiert und die Rollen gewählt wurden
-
-if(!playerExists && rolesChosenFlag){
-
-addPlayerToTable(playerNameFromLocalStorage);
-
-}
-}
-
-// Rufe checkIfPlayerExists auf DOM Content Loaded auf
-
-document.addEventListener("DOMContentLoaded",()=>{
-
-checkIfPlayerExists();
-
-});
