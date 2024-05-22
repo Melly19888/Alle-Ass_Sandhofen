@@ -242,12 +242,12 @@ dialog[open]::backdrop{
 	 font-weight:bolder ;
 	 margin-left:16.5em;
  }
- #Absenden{
-	 margin-top:-0.5em;
+ #Datenlöschen{
+	 margin-top:10em;
 	font-weight: 300;
     color:#0000cd;
     width: 30%;
-    height: 15%;
+    height: 30%;
     font-size: 18px;
     background-color:rgb(127,255,0);
     z-index: 100;
@@ -256,7 +256,22 @@ dialog[open]::backdrop{
 	 font-weight:bolder ;
 	 margin-left:22em;
  }
- #Datenlöschen, #Neu{
+ #Absenden{
+	 font-weight: 300;
+    color:#0000cd;
+    width: 30%;
+    height: 500px;
+    font-size: 18px;
+    background-color:rgb(127,255,0);
+    z-index: 100;
+    border-radius: 10px;
+	 text-align: center;
+	 font-weight:bolder ;
+	 margin-left:22em;
+	 
+ }
+ 
+  #Neu{
 	 
 	margin-top:0em;
 	 font-weight: 300;
@@ -269,7 +284,25 @@ dialog[open]::backdrop{
 	 font-weight:bolder ;
 	 
  }
- #Memory, #BilderRaetsel,#AllgemeineQuiz {
+ 
+ #Datenlöschen{
+  margin-top:1em;
+	 font-weight: 300;
+    color:Yellow;
+    width: 30%;
+    height: 150px;
+    font-size: 50px;
+    background-color:rgb(138,43,226);
+    z-index: 100;
+    border-radius: 10px;
+	 margin-left: 8em;
+	 text-align: center;
+	 font-weight:bolder ;
+	 
+ }
+ 
+ 
+ #Memory, #BilderRaetsel,#AllgemeineQuiz, #Absenden { 
 	 margin-top:-0.5em;
 	 font-weight: 300;
     color:#0000cd;
