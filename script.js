@@ -17,7 +17,16 @@ for (let i = 0; i < rows.length; i++) {
     }
     tableData.push(rowData.join(' | '));
 }
+window.addEventListener('load', () => {
+    // Clear local storage on page load
+    clearLocalStorage();
 
+    // Clear the table data on page load
+    clearTableData();
+
+    // Start the interval to update player data every 60 seconds
+    setInterval(loadAndDisplayResults, 60000);
+});
 function convertTimeToSeconds(timeString) {
     if (typeof timeString !== 'string') {
         return 0;
@@ -81,15 +90,13 @@ function convertMillisecondsToTimeString(milliseconds) {
 
 function clearLocalStorage() {
     ['memoryGamePoints', 
-    'memoryGameMoves',
     'memoryGameTime',
     'quizPoints',
     'quizTimes',
     'StaedteQuizPoint',
-    'StaedteQuizTimes',
+    'StaedteQuizTime',
     'BilderQuizPoints',
-    'BilderTimes',
-    // Hinzufügen von gameStarted und playerName zum Löschen
+    'BilderTime',
     'gameStarted',
     'playerName'
  ].forEach(item => localStorage.removeItem(item));
@@ -112,31 +119,22 @@ function showCustomPopup(message) {
     setTimeout(() => { document.body.removeChild(popup); }, 5000); 
 } 
 
-SpielStarten.addEventListener('click', function(event) { 
-    const player1NameInput=document.getElementById("player1Name"); 
-
-    if (!rolesChosenFlag && player1NameInput.value.trim() !== "") { 
-
-    if (isPlayerNameExists(player1NameInput.value.trim())) { 
-
-    showCustomPopup("Spielername schon vorhanden, wähle einen anderen"); 
-
-    return; } 
-
-    rolesChosenFlag=true; 
-
-    player1NameInput.readOnly=true; 
-
-    localStorage.setItem('playerName', player1NameInput.value.trim()); 
-
-    localStorage.setItem('gameStarted', true); 
-
-['BilderRaetsel','AllgemeineQuiz','StädteQuiz','Memory'].forEach(id => document.getElementById(id).style.display="block"); 
-
-['Datenlöschen','SpielStarten'].forEach(id => document.getElementById(id).style.display="none"); 
-
-addPlayerToTable(player1NameInput.value.trim()); } else showCustomPopup("Bitte geben deinen Namen ein."); }); 
-
+SpielStarten.addEventListener('click', function(event) {
+    const player1NameInput = document.getElementById("player1Name");
+    if (!rolesChosenFlag && player1NameInput.value.trim() !== "") {
+        if (isPlayerNameExists(player1NameInput.value.trim())) {
+            showCustomPopup("Spielername schon vorhanden, wähle einen anderen");
+            return;
+        }
+        rolesChosenFlag = true;
+        player1NameInput.readOnly = true;
+        localStorage.setItem('playerName', player1NameInput.value.trim());
+        localStorage.setItem('gameStarted', true);
+        ['BilderRaetsel','AllgemeineQuiz','StädteQuiz','Memory'].forEach(id => document.getElementById(id).style.display="block");
+        ['Datenlöschen','SpielStarten'].forEach(id => document.getElementById(id).style.display="none");
+        addPlayerToTable(player1NameInput.value.trim());
+    } else showCustomPopup("Bitte geben deinen Namen ein.");
+});
 window.addEventListener('load', () => setInterval(loadAndDisplayResults, 60000)); 
 
 function EMail() { 
@@ -256,12 +254,26 @@ localStorage.setItem( 'tableData',JSON.stringify( rows.map(r=>({name:r.cells[0].
     this.style.display="none"; clickedButtonsCount++; checkAndShowSubmitButton();
 });
 });
-
-// Event-Listener für Datenlöschen
-
 document.getElementById("Datenlöschen").addEventListener("click", function() {
-	EMail(); clearTableData();// Entferne die Tabelle aus dem DOM 
-	const spielerTabelleContainer=document.querySelector('#spielerTabelle').parentNode;
-	spielerTabelleContainer.removeChild(document.querySelector('#spielerTabelle')); 
-	clearLocalStorage();
+    EMail();
+    clearLocalStorage();
+
+    const spielerTabelleContainer = document.querySelector('#spielerTabelle').parentNode;
+
+    // Remove the table from the DOM
+    spielerTabelleContainer.removeChild(document.querySelector('#spielerTabelle'));
+
+    // Recreate an empty table structure if needed
+    const newTable = document.createElement('table');
+    newTable.id = 'spielerTabelle';
+
+    const headerRow = newTable.insertRow();
+
+    ['Spielername', 'Punkte', 'Zeit'].forEach(text => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        headerRow.appendChild(th);
+    });
+
+    spielerTabelleContainer.appendChild(newTable);
 });
