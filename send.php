@@ -1,7 +1,11 @@
 
 <?php
-if(isset($_POST['tableData'])){
+if (isset($_POST['tableData'])) {
     $tableData = json_decode($_POST['tableData'], true);
+    if ($tableData === null) {
+        echo json_encode(array('success' => false, 'error' => 'Invalid JSON data'));
+        exit;
+    }
 
     $to = "ausflug2024@gmail.com";
     $subject = "Tabelle der Spielergebnisse";
@@ -9,11 +13,11 @@ if(isset($_POST['tableData'])){
     $message .= "<table border='1'>";
     $message .= "<tr><th>Name</th><th>Punkte</th><th>Zeit</th></tr>";
 
-    foreach($tableData as $row){
+    foreach ($tableData as $row) {
         $message .= "<tr>";
-        $message .= "<td>".$row['name']."</td>";
-        $message .= "<td>".$row['points']."</td>";
-        $message .= "<td>".$row['time']."</td>";
+        $message .= "<td>" . htmlspecialchars($row['name']) . "</td>";
+        $message .= "<td>" . htmlspecialchars($row['points']) . "</td>";
+        $message .= "<td>" . htmlspecialchars($row['time']) . "</td>";
         $message .= "</tr>";
     }
 
@@ -22,7 +26,7 @@ if(isset($_POST['tableData'])){
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
-    if(mail($to, $subject, $message, $headers)){
+    if (mail($to, $subject, $message, $headers)) {
         echo json_encode(array('success' => true));
     } else {
         echo json_encode(array('success' => false));
