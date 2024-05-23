@@ -215,6 +215,7 @@ function allQuestionsAnswered() {
 document.getElementById("Button").addEventListener("click", function() { 
     checkAnswers(); 
     endQuiz(); 
+	window.close();
 });
 
 function endQuiz() { 
