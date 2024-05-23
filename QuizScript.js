@@ -197,6 +197,7 @@ if (ridAnswer && ridAnswer === 'I') {
 
     showAlertWithPointsAndTime(points,timeElapsed); 
     updateTableWithTimeAndPoints(points,timeElapsed);
+	 window.close();
 }
 
 function allQuestionsAnswered() {
@@ -214,14 +215,23 @@ function allQuestionsAnswered() {
 
 document.getElementById("Button").addEventListener("click", function() { 
     checkAnswers(); 
-    endQuiz(); 
-	window.close();
+    
+	
 });
 
-function endQuiz() { 
-    const { minutes, seconds }= calculateElapsedTime(); 
-    localStorage.setItem('quizPoints', points.toString()); 
-    localStorage.setItem('quizTimes', `${minutes}:${seconds.padStart(2,'0')}`); 
+function endQuiz() {
+   const { minutes, seconds }= calculateElapsedTime();
+   localStorage.setItem('quizPoints', points.toString());
+   localStorage.setItem('quizTimes', `${minutes}:${seconds.padStart(2,'0')}`);
+
+   console.log("Versuche das Fenster zu schließen...");
+
+   if (window.opener) {
+      
+       console.log("Fenster geschlossen.");
+   } else {
+       console.log("Fenster konnte nicht geschlossen werden. Möglicherweise wurde es nicht durch ein Skript geöffnet.");
+   }
 }
 
 function calculateElapsedTime(){ 
