@@ -6,7 +6,7 @@ const totalButtonsToClick = 4;
 const table = document.getElementById('spielerTabelle');
 const rows = table ? table.rows : [];
 
-['StädteQuiz', 'Memory', 'Absenden', 'BilderRaetsel', 'AllgemeineQuiz', 'Neu', 'Datenlöschen'].forEach(id => {
+['StädteQuiz', 'Memory', 'Absenden', 'BilderRaetsel', 'AllgemeineQuiz', 'Neu', 'Datenlöschen', 'Spielbeenden'].forEach(id => {
   const element = document.getElementById(id);
   if (element) element.style.display = "none";
 });
@@ -154,7 +154,7 @@ SpielStarten.addEventListener("click", function(event){
  ["BilderRaetsel","AllgemeineQuiz","StädteQuiz","Memory"].forEach(id=>document.getElementById(id).style.display="block");
  ["Datenlöschen","SpielStarten"].forEach(id=>document.getElementById(id).style.display="none");
  addPlayerToTable(player1NameInput.value.trim());
- }else showCustomPopup("Bitte geben deinen Namen ein.");
+ }else showCustomPopup("Bitte gib einen Namen ein.");
 });
 
 window.addEventListener("load",()=>setInterval(()=>{
@@ -219,6 +219,8 @@ console.error(
  );}
 }
 
+
+
 function clearTableData() {
 	localStorage.removeItem('tableData');
 	const tableBody=document.querySelector('#spielerTabelle tbody'); 
@@ -280,6 +282,7 @@ document.getElementById(id).addEventListener("click", function(){
 
 document .getElementById ("Datenlöschen").addEventListener ("click", function () {
 	EMail (); clearLocalStorage (); 
+	showCustomPopup("Daten gespeichert");
 	const spielerTabelleContainer = document .querySelector ('#spielerTabelle').parentNode ;
 
 	// Entfernen Sie die Tabelle aus dem DOM 
@@ -290,4 +293,10 @@ document .getElementById ("Datenlöschen").addEventListener ("click", function (
 	newTable.id ='spielerTabelle'; 
 	const headerRow=newTable .insertRow (); 
 	['Spielername ','Punkte ','Zeit'].forEach(text => { const th=document .createElement ('th'); th.textContent=text ; 
-	headerRow.appendChild(th ); }); spielerTabelleContainer.appendChild(newTable ); });
+	headerRow.appendChild(th ); }); spielerTabelleContainer.appendChild(newTable ); 
+	 document.getElementById("Datenlöschen").style.display='none';
+	 document.getElementById("Spielbeenden").style.display='block';});
+	
+	document.getElementById('Spielbeenden').addEventListener('click', function() {
+    location.reload();
+});

@@ -9,8 +9,6 @@ für alle Elemente und verwendet die border-box-Box-Modell-Eigenschaft.*/
     text-align: center;
     margin-top: 10px;
 }
-/* Hier wird der linke Seitenabstand des Body-Elements auf 3em gesetzt, 
-die maximale Breite auf 1200px und die Hintergrundfarbe auf #98f5ff.*/
 
 body{
 	margin-left: 5em;
@@ -18,14 +16,13 @@ body{
     background-color: #c6e2ff;
 }
 
-/*Alle Bilder werden auf 100% der Breite des übergeordneten Elements gesetzt und als Blockelemente dargestellt.*/
+
 
 img{
     width: 100%;
     display: block;
 }
-/* Dieser Abschnitt definiert das Styling für den Hauptcontainer des Spiels, 
-einschließlich der maximalen Breite, zentrierten Ausrichtung und Mindesthöhe.*/
+
 
 .main-container{
 	
@@ -38,17 +35,13 @@ einschließlich der maximalen Breite, zentrierten Ausrichtung und Mindesthöhe.*
     min-height: 792px;
 }
 
-/* Hier wird das Rasterlayout für das Spiel definiert,
- mit einer Spaltenanzahl von 10 und einem Abstand von 10px zwischen den Zellen.*/
- 
+
 .grid{
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     gap: 10px;
 }
 
-/* Definiert das Styling für die Spielkarten, einschließlich abgerundeter Ecken, Schatten, 
-Cursor-Eigenschaft und Hintergrundfarbe.*/
 
 .card{
     border-radius: 8px;
@@ -60,7 +53,6 @@ Cursor-Eigenschaft und Hintergrundfarbe.*/
 	
 }
 
-/* Ändert die Hintergrundfarbe der Karte beim Überfahren mit der Maus.*/
 
 .card:hover {
   background-color: #070124;
@@ -86,36 +78,22 @@ Cursor-Eigenschaft und Hintergrundfarbe.*/
     outline: 3px solid #ff3f34;
 }
 
-/*.restart-button { ... } und .show-all-button { ... }: Definieren das Styling für die Neustart- und
- "Alle Karten zeigen" -Schaltflächen im Spiel, einschließlich Hintergrundfarbe, Textfarbe, Polsterung usw.*/
+
  
-.restart-button {
-      background-color: #768cde;
+#restart-button, #absenden {
+      background-color: #551a8b;
       color: #4df505;
       padding: 15px 15px;
       border: groove;
       border-radius: 15px;
-      margin-top: 20px;
-	  margin-bottom: 20px;
-	  margin-left:2em;
+     margin-top: 5em;
+	  margin-left:20em;
       cursor: pointer;
-	  font-size: 50px;
 	  width: 30%;
+	 
       
     }
-	  .show-all-button {
-
-      background-color: #768cde;
-      color: #4df505;
-      padding: 15px 15px;
-      border: groove;
-      border-radius: 15px;
-	  margin-left:4em;
-      margin-top: 20px;
-	  margin-bottom: 20px;
-      cursor: pointer;
-	  font-size: 18px;
-    }
+	  
 	.restart-button:hover {
   background-color: #070124;
 }

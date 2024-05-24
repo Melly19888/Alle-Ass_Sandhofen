@@ -3,7 +3,7 @@ document.getElementById("absenden").style.display = "none";
 // Karten Bilder info
 let cardsList = [
     {"name": "Melly1", "img_src": "IMG/Memo/img1.png"},
-    {"name": "Melly2", "img_src": "IMG/Memo/img2.png"},
+   {"name": "Melly2", "img_src": "IMG/Memo/img2.png"},
     {"name": "Melly3", "img_src": "IMG/Memo/img3.png"},
     {"name": "Melly4", "img_src": "IMG/Memo/img4.png"},
     {"name": "Melly5", "img_src": "IMG/Memo/img5.png"},
