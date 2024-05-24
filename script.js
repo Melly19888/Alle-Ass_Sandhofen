@@ -274,23 +274,50 @@ function saveTableData(){
 document.getElementById(id).addEventListener("click", function(){
 	this.style.display="none"; clickedButtonsCount++; checkAndShowSubmitButton(); }); });
 
-document .getElementById ("Datenlöschen").addEventListener ("click", function () {
-	EMail (); clearLocalStorage (); 
-	showCustomPopup("Daten gespeichert");
-	const spielerTabelleContainer = document .querySelector ('#spielerTabelle').parentNode ;
+document.getElementById("Datenlöschen").addEventListener("click", function () {
+    EMail();
+    clearLocalStorage();
 
-	// Entfernen Sie die Tabelle aus dem DOM 
-	spielerTabelleContainer .removeChild(document .querySelector ('#spielerTabelle'));
+    // Laden der TableData aus dem lokalen Speicher
+    const tableDataString = localStorage.getItem("tableData");
+    let tableData;
 
-	// Erstellen Sie bei Bedarf eine leere Tabellenstruktur neu
-	const newTable=document .createElement ('table'); 
-	newTable.id ='spielerTabelle'; 
-	const headerRow=newTable .insertRow (); 
-	['Spielername ','Punkte ','Zeit'].forEach(text => { const th=document .createElement ('th'); th.textContent=text ; 
-	headerRow.appendChild(th ); }); spielerTabelleContainer.appendChild(newTable ); 
-	 document.getElementById("Datenlöschen").style.display='none';
-	 document.getElementById("Spielbeenden").style.display='block';});
-	
+    if (tableDataString) {
+        try {
+            tableData = JSON.parse(tableDataString);
+        } catch (error) {
+            console.error("Fehler beim Parsen der TableData:", error);
+            return;
+        }
+    }
+
+    if (tableData && tableData.length > 0) {
+        showCustomPopup(`Danke fürs Spielen ${tableData[0].name}! Du hast ${tableData[0].points} Punkte in ${tableData[0].time} erreicht.`);
+    } else {
+        showCustomPopup("Keine Daten gefunden.");
+    }
+
+    const spielerTabelleContainer = document.querySelector('#spielerTabelle').parentNode;
+
+    // Entfernen Sie die Tabelle aus dem DOM
+    spielerTabelleContainer.removeChild(document.querySelector('#spielerTabelle'));
+
+    // Erstellen Sie bei Bedarf eine leere Tabellenstruktur neu
+    const newTable = document.createElement('table');
+    newTable.id = 'spielerTabelle';
+
+    const headerRow = newTable.insertRow();
+    ['Spielername', 'Punkte', 'Zeit'].forEach(text => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        headerRow.appendChild(th);
+    });
+
+    spielerTabelleContainer.appendChild(newTable);
+
+    document.getElementById("Datenlöschen").style.display = 'none';
+    document.getElementById("Spielbeenden").style.display = 'block';
+});
 	document.getElementById('Spielbeenden').addEventListener('click', function() {
     location.reload();
 });
