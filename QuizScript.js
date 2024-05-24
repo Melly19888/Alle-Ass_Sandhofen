@@ -52,96 +52,96 @@ function checkAnswers() {
     const nutellaAnswer = document.querySelector('input[name=nutellaQuestion]:checked');
     if (nutellaAnswer && nutellaAnswer.value === 'C') {
         points++;
-        console.log('Richtige Antwort bei Nutella-Frage.'+ points);
+      
     } else {
-        console.log('Falsche Antwort bei Nutella-Frage.');
+        
     }
 
     // Überprüfen der zweiten Frage
     const maerchenAnswer = document.querySelector('input[name=maerchenfigur]:checked');
     if (maerchenAnswer && maerchenAnswer.value === 'D') {
         points++;
-        console.log('Richtige Antwort bei Märchenfigur-Frage.'+ points);
+       
     } else {
-        console.log('Falsche Antwort bei Märchenfigur-Frage.');
+       
     }
 
     // Überprüfen der dritten Frage
     const palindromeTimeAnswer = document.querySelector('input[name=palindromeTime]:checked');
     if (palindromeTimeAnswer && palindromeTimeAnswer.value === 'B') {
         points++;
-        console.log('Richtige Antwort bei Palindrom-Zeit-Frage.'+ points);
+        
     } else {
-        console.log('Falsche Antwort bei Palindrom-Zeit-Frage.');
+       
     }
 	// Überprüfen der fünften Frage
     const deutscheVorurteileAnswer = document.querySelector('input[name=deutscheVorurteile]:checked');
     if (deutscheVorurteileAnswer && deutscheVorurteileAnswer.value === 'C') {
         points++;
-		 console.log('Richtige Antwort bei deutscheVorurteileAnswer.'+ points);
+		
     } else {
-        console.log('Falsche Antwort bei deutscheVorurteileAnswer.');
+        
     }
     // Überprüfen der fünften Frage
     const namenQuizAnswer = document.querySelector('input[name=namenQuiz]:checked');
     if (namenQuizAnswer && namenQuizAnswer.value === 'D') {
         points++;
-		 console.log('Richtige Antwort bei namenQuizAnswer.'+ points);
+		
     } else {
-        console.log('Falsche Antwort bei namenQuizAnswer.');
+       
     }
     const würfelAnswerElement = document.getElementById('an');
     if (würfelAnswerElement) {
         const würfelAnswer = würfelAnswerElement.value;
         if (würfelAnswer === '1') {
             points++;
-            console.log('Richtige Antwort bei Würfel-Frage. Neuer Punktestand: ' + points);
+           
         } else {
-            console.log('Falsche Antwort bei Würfel-Frage.');
+            
         }
     } else {
-        console.log('Element mit ID "an" wurde nicht gefunden.');
+      
 	}// Überprüfen der Antwort
 	const finnAnswer = document.querySelector('input[name=finn]:checked');
 	if (finnAnswer && finnAnswer.value === 'C') {
 	points++;	
-  console.log('Richtige Antwort finnAnswer '+ points );
+  
         } else {
-            console.log('Falsche Antwort finnAnswer');
+            
         }	
   // Überprüfen der letzten Frage
 	const sonjaAnswer = document.querySelector('input[name=sonja]:checked');
 	if (sonjaAnswer && sonjaAnswer.value === 'B') {
     points++; // Erhöhe den Punktestand um einen Punkt für eine richtige Antwort
-	console.log('Richtige Antwort sonjaAnswer '+ points );
+	
         } else {
-            console.log('Falsche Antwort sonjaAnswer');
+            
         }	
 		// Korrekte Verwendung von || für multiple Bedingungen
     const riddleAnswer = document.getElementById('Zahl').value;
     if (riddleAnswer === '8' || riddleAnswer.toLowerCase() === 'acht' || riddleAnswer.toLowerCase() === 'Acht') {
         points++;
-		console.log('Richtige Antwort riddleAnswerZahl '+ points );
+		
         } else {
-            console.log('Falsche Antwort riddleAnswerZahl');
+            
         
     }
 	
    const riddlAnswer = document.getElementById('Ameise').value.trim().toLowerCase();
 if (riddlAnswer === 'a' || riddlAnswer === 'A') {
     points++; // Erhöhe den Punktestand um einen Punkt für eine richtige Antwort
-	console.log('Richtige Antwort riddleAnswerAmeise '+ points );
+	
         } else {
-            console.log('Falsche Antwort riddleAnswerAmeise');
+            
         
     }
 	  // Überprüfen des Krokodil-Rätsels
     const selectedRadioValueKrokodil = document.querySelector('input[name="answer"]:checked')?.value;
        if (selectedRadioValueKrokodil === 'A' ) {
         points++;
-   console.log('Richtige Antwort selectedRadioValueKrokodil '+ points );
+  
         } else {
-            console.log('Falsche Antwort selectedRadioValueKrokodil');
+            
         
     }
 	 const selectedRadioValue = document.querySelector('input[name="answe"]:checked')?.value;
@@ -149,39 +149,39 @@ if (riddlAnswer === 'a' || riddlAnswer === 'A') {
     // Überprüfe, ob der ausgewählte Wert der korrekten Antwort entspricht
     if (selectedRadioValue === 'F') {
 		 points++; // Erhöhe den Punktestand um einen Punkt für eine richtige Antwort
-console.log('Richtige Antwort selectedRadioValue ' + points);
+
         } else {
-            console.log('Falsche Antwort selectedRadioValue');
+          
         
     }    
     const palindromeFormAnswer = document.querySelector('input[name="ans"]:checked')?.value;
 if (palindromeFormAnswer && palindromeFormAnswer === 'B') {
     points++;
-console.log('Richtige Antwort palindromeFormAnswer '+ points );
+
         } else {
-            console.log('Falsche Antwort palindromeFormAnswer');
+            
         
     }   
 const resultAnswer = document.querySelector('input[name="result"]:checked')?.value;
 if (resultAnswer && resultAnswer === 'B') {
     points++;
-    console.log('Richtige Antwort resultAnswer ' + points);
+
 } else {
-    console.log('Falsche Antwort resultAnswer');
+   
 }  
 	const riAnswer = document.querySelector('input[name="ri"]:checked')?.value;
 if (riAnswer && riAnswer === 'A') {
     points++;
-    console.log('Richtige Antwort riAnswer ' + points);
+   
 } else {
-    console.log('Falsche Antwort riAnswer');
+    
 }  
 	const ridAnswer = document.querySelector('input[name="rid"]:checked')?.value;
 if (ridAnswer && ridAnswer === 'I') {
     points++;
-    console.log('Richtige Antwort ridAnswer ' + points);
+    
 } else {
-    console.log('Falsche Antwort ridAnswer');
+    
 }  
 
 
@@ -224,13 +224,13 @@ function endQuiz() {
    localStorage.setItem('quizPoints', points.toString());
    localStorage.setItem('quizTimes', `${minutes}:${seconds.padStart(2,'0')}`);
 
-   console.log("Versuche das Fenster zu schließen...");
+  
 
    if (window.opener) {
       
-       console.log("Fenster geschlossen.");
+     
    } else {
-       console.log("Fenster konnte nicht geschlossen werden. Möglicherweise wurde es nicht durch ein Skript geöffnet.");
+      
    }
 }
 

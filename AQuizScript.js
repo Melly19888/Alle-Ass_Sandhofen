@@ -45,7 +45,7 @@ function updateTimer() {
 
     if (timerElement) {
         timerElement.textContent = `Zeit: ${minutesTotal.toString().padStart(2, "0")}:${secondsTotal.toString().padStart(2, "0")}`;
-        console.log(`Zeit: ${minutesTotal.toString().padStart(2, "0")}:${secondsTotal.toString().padStart(2, "0")}`); // Debugging-Ausgabe
+        
     }
 }
 function checkAnswers(event) {
@@ -113,7 +113,7 @@ function displaySavedTime() {
             const savedTimeElement=document.getElementById('savedTime');
             if(savedTimeElement){
                 savedTimeElement.textContent=`Gespeicherte Zeit: ${minutesSaved} Minute(n) und ${secondsSaved} Sekunde(n).`;
-                console.log("Gespeicherte Zeit:", savedTimeElement.textContent); // Debugging-Ausgabe
+                ("Gespeicherte Zeit:", savedTimeElement.textContent); // Debugging-Ausgabe
             }
         } else{
             console.error("Gespeicherte Zeit ist keine gültige Zahl.");

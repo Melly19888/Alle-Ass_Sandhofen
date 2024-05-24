@@ -93,12 +93,8 @@ function loadAndDisplayResults() {
         "tableData",
         JSON.stringify(tableData)
       );
-      console.log("Geladene Punkte:", combinedPoints);
-      console.log(
-        "Geladene Zeit in Sekunden:",
-        combinedTimeInSeconds
-      );
-      console.log("Gespeicherte TableData:", tableData);
+    
+	
       return tableData; // Return the created object
 
  } catch(error){
@@ -177,7 +173,7 @@ return response.json();
 })
 .then(data=>{
 if(data&&data.success){
-console.log("E-Mail erfolgreich gesendet");
+
 return fetch(
 "save_to_file.php",
 {method:"POST",headers:{ "Content-Type":"application/json"},body:tableDataString}
@@ -194,9 +190,7 @@ return response.json();
 })
 .then(data=>{
 if(data&&data.success){
-console.log(
-"Daten erfolgreich in Datei gespeichert"
- );}else{
+}else{
 throw new Error(
 data.error||
 "Fehler beim Speichern der Daten in Datei"
@@ -213,7 +207,7 @@ error.response.text().then(text=>console.error("Antworttext:",text));}});
 console.error(
 "Fehler beim Verarbeiten der Tabellen-Daten:",
 error);}
-console.log("tableDataString:",tableDataString);}else{
+}else{
 console.error(
 "Keine Tabellen-Daten zum versenden gefunden."
  );}
